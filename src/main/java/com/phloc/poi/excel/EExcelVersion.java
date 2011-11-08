@@ -17,10 +17,17 @@
  */
 package com.phloc.poi.excel;
 
-import javax.annotation.Nonnull;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.WillClose;
+
+import org.apache.poi.POIXMLException;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
@@ -43,6 +50,26 @@ public enum EExcelVersion
     public Workbook createWorkbook ()
     {
       return new HSSFWorkbook ();
+    }
+
+    @Override
+    @Nullable
+    public Workbook readWorkbook (@Nonnull @WillClose final InputStream aIS)
+    {
+      try
+      {
+        // Closes the input stream internally
+        return new HSSFWorkbook (aIS);
+      }
+      catch (final OfficeXmlFileException ex)
+      {
+        // No XLS
+        return null;
+      }
+      catch (final IOException ex)
+      {
+        return null;
+      }
     }
 
     @Override
@@ -76,6 +103,26 @@ public enum EExcelVersion
     }
 
     @Override
+    @Nullable
+    public Workbook readWorkbook (@Nonnull @WillClose final InputStream aIS)
+    {
+      try
+      {
+        // Closes the input stream internally
+        return new XSSFWorkbook (aIS);
+      }
+      catch (final POIXMLException ex)
+      {
+        // No XLSX
+        return null;
+      }
+      catch (final IOException ex)
+      {
+        return null;
+      }
+    }
+
+    @Override
     @Nonnull
     public RichTextString createRichText (final String sValue)
     {
@@ -97,8 +144,21 @@ public enum EExcelVersion
     }
   };
 
+  /**
+   * @return A newly created workbook of this version
+   */
   @Nonnull
   public abstract Workbook createWorkbook ();
+
+  /**
+   * Open an existing work book for reading.
+   * 
+   * @param aIS
+   *        The input stream to read from. May not be <code>null</code>.
+   * @return <code>null</code> in case the workbook cannot be opened.
+   */
+  @Nullable
+  public abstract Workbook readWorkbook (@Nonnull InputStream aIS);
 
   @Nonnull
   public abstract RichTextString createRichText (String sValue);

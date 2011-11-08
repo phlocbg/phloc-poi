@@ -19,16 +19,23 @@ package com.phloc.poi.excel.style;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 import com.phloc.commons.ICloneable;
-import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Represents a single excel style with enums instead of numeric values.
+ * 
+ * @author philip
+ */
+@NotThreadSafe
 public final class ExcelStyle implements ICloneable <ExcelStyle>
 {
   private EExcelAlignment m_eAlign;

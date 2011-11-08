@@ -20,7 +20,7 @@ package com.phloc.poi.excel.style;
 import org.apache.poi.ss.usermodel.CellStyle;
 
 /**
- * Excel horicontal alignment enum.
+ * Excel vertical alignment enum.
  * 
  * @author philip
  */

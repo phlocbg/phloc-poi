@@ -18,6 +18,10 @@
 package com.phloc.poi.excel;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import javax.annotation.Nonnull;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Font;
@@ -26,6 +30,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
+
+import com.phloc.commons.io.resource.ClassPathResource;
 
 /**
  * Test class for class {@link ExcelReadUtils}.
@@ -72,5 +78,63 @@ public final class ExcelReadUtilsTest
       aCell.setCellValue (aRTS);
       assertEquals ("Anyhow", ExcelReadUtils.getCellValueObject (aCell));
     }
+  }
+
+  /**
+   * Validate reference sheets
+   * 
+   * @param aWB
+   *        Workbook to use
+   */
+  private void _validateWorkbook (@Nonnull final Workbook aWB)
+  {
+    final Sheet aSheet1 = aWB.getSheet ("Sheet1");
+    assertNotNull (aSheet1);
+    assertNotNull (aWB.getSheet ("Sheet2"));
+    final Sheet aSheet3 = aWB.getSheet ("Sheet3");
+    assertNotNull (aSheet3);
+    assertNull (aWB.getSheet ("Sheet4"));
+
+    Cell aCell = aSheet1.getRow (0).getCell (0);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
+    assertEquals ("A1", aCell.getStringCellValue ());
+
+    aCell = aSheet1.getRow (1).getCell (1);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
+    assertEquals ("B2", aCell.getStringCellValue ());
+
+    aCell = aSheet1.getRow (2).getCell (2);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
+    assertEquals ("C\n3", aCell.getStringCellValue ());
+
+    aCell = aSheet1.getRow (3).getCell (3);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_NUMERIC, aCell.getCellType ());
+    assertEquals (0.00001, 4.4, aCell.getNumericCellValue ());
+
+    for (int i = 0; i < 6; ++i)
+    {
+      aCell = aSheet3.getRow (i).getCell (i);
+      assertNotNull (aCell);
+      assertEquals (Cell.CELL_TYPE_NUMERIC, aCell.getCellType ());
+      assertEquals (0.00001, i + 1, aCell.getNumericCellValue ());
+    }
+  }
+
+  @Test
+  public void testReadXLS ()
+  {
+    // XLS
+    Workbook aWB = EExcelVersion.XLS.readWorkbook (ClassPathResource.getInputStream ("excel/test1.xls"));
+    assertNotNull (aWB);
+    _validateWorkbook (aWB);
+
+    // XLSX
+    aWB = EExcelVersion.XLSX.readWorkbook (ClassPathResource.getInputStream ("excel/test1.xlsx"));
+    assertNotNull (aWB);
+    _validateWorkbook (aWB);
   }
 }

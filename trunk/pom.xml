@@ -34,6 +34,10 @@
       <url>sftp://www.phloc.com/var/www/html-repo/maven2</url>
     </repository>
   </distributionManagement>
+  
+  <properties>
+    <poi.version>3.8-beta4</poi.version>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -49,12 +53,12 @@
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi</artifactId>
-      <version>3.7</version>
+      <version>${poi.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-ooxml</artifactId>
-      <version>3.7</version>
+      <version>${poi.version}</version>
       <exclusions>
         <!-- Included in JDK6  -->
         <exclusion>

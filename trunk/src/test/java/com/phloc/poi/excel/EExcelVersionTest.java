@@ -18,9 +18,14 @@
 package com.phloc.poi.excel;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
+
+import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.io.resource.ClassPathResource;
 
 /**
  * Test class for class {@link EExcelVersion}.
@@ -40,5 +45,23 @@ public final class EExcelVersionTest
       assertTrue (eVersion.getFileExtension ().startsWith ("."));
       assertNotNull (eVersion.getMimeType ());
     }
+  }
+
+  @Test
+  public void testReadWorkbook ()
+  {
+    final IReadableResource aXLSX = new ClassPathResource ("excel/test1.xlsx");
+    assertTrue (aXLSX.exists ());
+    Workbook aWB = EExcelVersion.XLSX.readWorkbook (aXLSX.getInputStream ());
+    assertNotNull (aWB);
+    aWB = EExcelVersion.XLS.readWorkbook (aXLSX.getInputStream ());
+    assertNull (aWB);
+
+    final IReadableResource aXLS = new ClassPathResource ("excel/test1.xls");
+    assertTrue (aXLS.exists ());
+    aWB = EExcelVersion.XLSX.readWorkbook (aXLS.getInputStream ());
+    assertNull (aWB);
+    aWB = EExcelVersion.XLS.readWorkbook (aXLS.getInputStream ());
+    assertNotNull (aWB);
   }
 }

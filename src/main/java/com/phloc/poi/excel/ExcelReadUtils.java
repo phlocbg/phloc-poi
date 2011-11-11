@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.RichTextString;
 
 /**
@@ -108,5 +109,17 @@ public final class ExcelReadUtils
   public static RichTextString getCellValueRichText (@Nullable final Cell aCell)
   {
     return aCell == null ? null : aCell.getRichStringCellValue ();
+  }
+
+  @Nullable
+  public static String getCellFormula (@Nullable final Cell aCell)
+  {
+    return aCell == null ? null : aCell.getCellFormula ();
+  }
+
+  @Nullable
+  public static Hyperlink getHyperlink (@Nullable final Cell aCell)
+  {
+    return aCell == null ? null : aCell.getHyperlink ();
   }
 }

@@ -26,7 +26,7 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 import com.phloc.commons.ICloneable;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -188,17 +188,17 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     if (!(o instanceof ExcelStyle))
       return false;
     final ExcelStyle rhs = (ExcelStyle) o;
-    return CompareUtils.nullSafeEquals (m_eAlign, rhs.m_eAlign) &&
-           CompareUtils.nullSafeEquals (m_eVAlign, rhs.m_eVAlign) &&
+    return EqualsUtils.nullSafeEquals (m_eAlign, rhs.m_eAlign) &&
+           EqualsUtils.nullSafeEquals (m_eVAlign, rhs.m_eVAlign) &&
            m_bWrapText == rhs.m_bWrapText &&
-           CompareUtils.nullSafeEquals (m_sDataFormat, rhs.m_sDataFormat) &&
-           CompareUtils.nullSafeEquals (m_eFillBackgroundColor, rhs.m_eFillBackgroundColor) &&
-           CompareUtils.nullSafeEquals (m_eFillForegroundColor, rhs.m_eFillForegroundColor) &&
-           CompareUtils.nullSafeEquals (m_eFillPattern, rhs.m_eFillPattern) &&
-           CompareUtils.nullSafeEquals (m_eBorderTop, rhs.m_eBorderTop) &&
-           CompareUtils.nullSafeEquals (m_eBorderRight, rhs.m_eBorderRight) &&
-           CompareUtils.nullSafeEquals (m_eBorderBottom, rhs.m_eBorderBottom) &&
-           CompareUtils.nullSafeEquals (m_eBorderLeft, rhs.m_eBorderLeft);
+           EqualsUtils.nullSafeEquals (m_sDataFormat, rhs.m_sDataFormat) &&
+           EqualsUtils.nullSafeEquals (m_eFillBackgroundColor, rhs.m_eFillBackgroundColor) &&
+           EqualsUtils.nullSafeEquals (m_eFillForegroundColor, rhs.m_eFillForegroundColor) &&
+           EqualsUtils.nullSafeEquals (m_eFillPattern, rhs.m_eFillPattern) &&
+           EqualsUtils.nullSafeEquals (m_eBorderTop, rhs.m_eBorderTop) &&
+           EqualsUtils.nullSafeEquals (m_eBorderRight, rhs.m_eBorderRight) &&
+           EqualsUtils.nullSafeEquals (m_eBorderBottom, rhs.m_eBorderBottom) &&
+           EqualsUtils.nullSafeEquals (m_eBorderLeft, rhs.m_eBorderLeft);
   }
 
   @Override

@@ -25,6 +25,11 @@ import javax.annotation.Nullable;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 
+/**
+ * A caching class that maps {@link ExcelStyle} objects to {@link CellStyle}.
+ * 
+ * @author philip
+ */
 public final class ExcelStyleCache
 {
   private final Map <ExcelStyle, CellStyle> m_aMap = new HashMap <ExcelStyle, CellStyle> ();

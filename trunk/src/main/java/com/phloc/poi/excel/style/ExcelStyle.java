@@ -38,9 +38,11 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class ExcelStyle implements ICloneable <ExcelStyle>
 {
+  public static final boolean DEFAULT_WRAP_TEXT = false;
+
   private EExcelAlignment m_eAlign;
   private EExcelVerticalAlignment m_eVAlign;
-  private boolean m_bWrapText = false;
+  private boolean m_bWrapText = DEFAULT_WRAP_TEXT;
   private String m_sDataFormat;
   private IndexedColors m_eFillBackgroundColor;
   private IndexedColors m_eFillForegroundColor;
@@ -55,6 +57,8 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
 
   public ExcelStyle (@Nonnull final ExcelStyle rhs)
   {
+    m_eAlign = rhs.m_eAlign;
+    m_eVAlign = rhs.m_eVAlign;
     m_bWrapText = rhs.m_bWrapText;
     m_sDataFormat = rhs.m_sDataFormat;
     m_eFillBackgroundColor = rhs.m_eFillBackgroundColor;
@@ -66,18 +70,36 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     m_eBorderLeft = rhs.m_eBorderLeft;
   }
 
+  @Nullable
+  public EExcelAlignment getAlign ()
+  {
+    return m_eAlign;
+  }
+
   @Nonnull
-  public ExcelStyle setDataFormat (@Nullable final EExcelAlignment eAlign)
+  public ExcelStyle setAlign (@Nullable final EExcelAlignment eAlign)
   {
     m_eAlign = eAlign;
     return this;
   }
 
+  @Nullable
+  public EExcelVerticalAlignment getVerticalAlign ()
+  {
+    return m_eVAlign;
+  }
+
   @Nonnull
-  public ExcelStyle setDataFormat (@Nullable final EExcelVerticalAlignment eVAlign)
+  public ExcelStyle setVerticalAlign (@Nullable final EExcelVerticalAlignment eVAlign)
   {
     m_eVAlign = eVAlign;
     return this;
+  }
+
+  @Nullable
+  public boolean isWrapText ()
+  {
+    return m_bWrapText;
   }
 
   @Nonnull
@@ -87,11 +109,23 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     return this;
   }
 
+  @Nullable
+  public String getDataFormat ()
+  {
+    return m_sDataFormat;
+  }
+
   @Nonnull
   public ExcelStyle setDataFormat (@Nullable final String sDataFormat)
   {
     m_sDataFormat = sDataFormat;
     return this;
+  }
+
+  @Nullable
+  public IndexedColors getFillBackgroundColor ()
+  {
+    return m_eFillBackgroundColor;
   }
 
   @Nonnull
@@ -101,11 +135,23 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     return this;
   }
 
+  @Nullable
+  public IndexedColors getFillForegroundColor ()
+  {
+    return m_eFillForegroundColor;
+  }
+
   @Nonnull
   public ExcelStyle setFillForegroundColor (@Nullable final IndexedColors eColor)
   {
     m_eFillForegroundColor = eColor;
     return this;
+  }
+
+  @Nullable
+  public EExcelPattern getFillPattern ()
+  {
+    return m_eFillPattern;
   }
 
   @Nonnull
@@ -115,11 +161,23 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     return this;
   }
 
+  @Nullable
+  public EExcelBorder getBorderTop ()
+  {
+    return m_eBorderTop;
+  }
+
   @Nonnull
   public ExcelStyle setBorderTop (@Nullable final EExcelBorder eBorder)
   {
     m_eBorderTop = eBorder;
     return this;
+  }
+
+  @Nullable
+  public EExcelBorder getBorderRight ()
+  {
+    return m_eBorderRight;
   }
 
   @Nonnull
@@ -129,11 +187,23 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     return this;
   }
 
+  @Nullable
+  public EExcelBorder getBorderBottom ()
+  {
+    return m_eBorderBottom;
+  }
+
   @Nonnull
   public ExcelStyle setBorderBottom (@Nullable final EExcelBorder eBorder)
   {
     m_eBorderBottom = eBorder;
     return this;
+  }
+
+  @Nullable
+  public EExcelBorder getBorderLeft ()
+  {
+    return m_eBorderLeft;
   }
 
   @Nonnull

@@ -324,7 +324,8 @@ public final class WorkbookCreationHelper
     }
     catch (final IOException ex)
     {
-      s_aLogger.warn ("Failed to write Excel workbook to output stream " + aOS, ex);
+      if (!StreamUtils.isKnownEOFException (ex))
+        s_aLogger.warn ("Failed to write Excel workbook to output stream " + aOS, ex);
       return ESuccess.FAILURE;
     }
     finally

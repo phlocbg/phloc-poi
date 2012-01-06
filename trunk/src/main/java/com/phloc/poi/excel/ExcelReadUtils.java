@@ -17,14 +17,27 @@
  */
 package com.phloc.poi.excel;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.apache.poi.POIXMLException;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.RichTextString;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.phloc.commons.io.IInputStreamProvider;
+import com.phloc.commons.io.streams.StreamUtils;
 
 /**
  * Misc Excel read helper methods.
@@ -34,8 +47,66 @@ import org.apache.poi.ss.usermodel.RichTextString;
 @Immutable
 public final class ExcelReadUtils
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ExcelReadUtils.class);
+
   private ExcelReadUtils ()
   {}
+
+  /**
+   * Try to read an Excel {@link Workbook} from the passed
+   * {@link IInputStreamProvider}. First XLS is tried, than XLSX, as XLS files
+   * can be identified more easily.
+   * 
+   * @param aIIS
+   *        The input stream provider to read from.
+   * @return <code>null</code> if the content of the InputStream could not be
+   *         interpreted as Excel file
+   */
+  @Nullable
+  public static Workbook readWorkbookFromInputStream (@Nonnull final IInputStreamProvider aIIS)
+  {
+    InputStream aIS = null;
+    try
+    {
+      // Try to read as XLS
+      aIS = aIIS.getInputStream ();
+      if (aIS == null)
+      {
+        // Failed to open input stream -> no need to continue
+        return null;
+      }
+      return new HSSFWorkbook (aIS);
+    }
+    catch (final IOException ex)
+    {
+      s_aLogger.error ("Error trying to read XLS file from " + aIIS, ex);
+    }
+    catch (final OfficeXmlFileException ex)
+    {
+      // No XLS -> try XSLS
+      StreamUtils.close (aIS);
+      try
+      {
+        // Re-retrieve the input stream, to ensure we read from the beginning!
+        aIS = aIIS.getInputStream ();
+        return new XSSFWorkbook (aIS);
+      }
+      catch (final IOException ex2)
+      {
+        s_aLogger.error ("Error trying to read XLSX file from " + aIIS, ex);
+      }
+      catch (final POIXMLException ex2)
+      {
+        // No XLSX either -> no valid Excel file
+      }
+    }
+    finally
+    {
+      // Ensure the InputStream is closed. The data structures are in memory!
+      StreamUtils.close (aIS);
+    }
+    return null;
+  }
 
   /**
    * Return the best matching Java object underlying the passed cell.<br>

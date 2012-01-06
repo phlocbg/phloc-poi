@@ -40,6 +40,31 @@ import com.phloc.commons.io.resource.ClassPathResource;
  */
 public final class ExcelReadUtilsTest
 {
+  private static final String TEST1_XLS = "excel/test1.xls";
+  private static final String TEST1_XLSX = "excel/test1.xlsx";
+
+  @Test
+  public void testReadWorkbookFromInputStream ()
+  {
+    // XLS
+    Workbook aWB = ExcelReadUtils.readWorkbookFromInputStream (new ClassPathResource (TEST1_XLS));
+    assertNotNull (aWB);
+    _validateWorkbook (aWB);
+
+    // XLSX
+    aWB = ExcelReadUtils.readWorkbookFromInputStream (new ClassPathResource (TEST1_XLSX));
+    assertNotNull (aWB);
+    _validateWorkbook (aWB);
+
+    // No such file
+    aWB = ExcelReadUtils.readWorkbookFromInputStream (new ClassPathResource ("no-such-file.txt"));
+    assertNull (aWB);
+
+    // No Excel file
+    aWB = ExcelReadUtils.readWorkbookFromInputStream (new ClassPathResource ("excel/nonexcel.txt"));
+    assertNull (aWB);
+  }
+
   @Test
   public void testGetCellValueObject ()
   {
@@ -128,12 +153,12 @@ public final class ExcelReadUtilsTest
   public void testReadXLS ()
   {
     // XLS
-    Workbook aWB = EExcelVersion.XLS.readWorkbook (ClassPathResource.getInputStream ("excel/test1.xls"));
+    Workbook aWB = EExcelVersion.XLS.readWorkbook (ClassPathResource.getInputStream (TEST1_XLS));
     assertNotNull (aWB);
     _validateWorkbook (aWB);
 
     // XLSX
-    aWB = EExcelVersion.XLSX.readWorkbook (ClassPathResource.getInputStream ("excel/test1.xlsx"));
+    aWB = EExcelVersion.XLSX.readWorkbook (ClassPathResource.getInputStream (TEST1_XLSX));
     assertNotNull (aWB);
     _validateWorkbook (aWB);
   }

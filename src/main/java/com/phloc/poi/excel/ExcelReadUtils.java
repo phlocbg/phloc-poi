@@ -136,12 +136,10 @@ public final class ExcelReadUtils
         }
         if (dValue == (long) dValue)
         {
-          // It's not a real double value, it's an int value
+          // It's not a real double value, it's a long value
           return Long.valueOf ((long) dValue);
         }
         // It's a real floating point number
-        // Using the BigDecimal (double) constructor leads to very weird
-        // values compared to "Double.toString" which works!
         return Double.valueOf (dValue);
       }
       case Cell.CELL_TYPE_STRING:
@@ -173,7 +171,17 @@ public final class ExcelReadUtils
   @Nullable
   public static Date getCellValueJavaDate (@Nullable final Cell aCell)
   {
-    return aCell == null ? null : aCell.getDateCellValue ();
+    if (aCell != null)
+      try
+      {
+        return aCell.getDateCellValue ();
+      }
+      catch (final RuntimeException ex)
+      {
+        // fall through
+        s_aLogger.warn ("Failed to get cell value as date: " + ex.getMessage ());
+      }
+    return null;
   }
 
   @Nullable

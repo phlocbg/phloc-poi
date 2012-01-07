@@ -165,7 +165,13 @@ public final class ExcelReadUtils
   @Nullable
   public static Number getCellValueNumber (@Nullable final Cell aCell)
   {
-    return (Number) getCellValueObject (aCell);
+    final Object aValue = getCellValueObject (aCell);
+    if (aValue != null && !(aValue instanceof Number))
+    {
+      s_aLogger.warn ("Failed to get cell value as number: " + aValue.getClass ());
+      return null;
+    }
+    return (Number) aValue;
   }
 
   @Nullable
@@ -193,7 +199,17 @@ public final class ExcelReadUtils
   @Nullable
   public static String getCellFormula (@Nullable final Cell aCell)
   {
-    return aCell == null ? null : aCell.getCellFormula ();
+    if (aCell != null)
+      try
+      {
+        return aCell.getCellFormula ();
+      }
+      catch (final RuntimeException ex)
+      {
+        // fall through
+        s_aLogger.warn ("Failed to get cell formula: " + ex.getMessage ());
+      }
+    return null;
   }
 
   @Nullable

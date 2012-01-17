@@ -91,10 +91,17 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>
-              com.phloc.poi.*
-            </Export-Package>
+            <Export-Package>com.phloc.poi.*</Export-Package>
           </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>src/test/resources/excel/**</exclude>
+          </excludes>
         </configuration>
       </plugin>
     </plugins>

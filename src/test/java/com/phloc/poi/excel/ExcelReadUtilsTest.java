@@ -20,10 +20,13 @@ package com.phloc.poi.excel;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import javax.annotation.Nonnull;
 
+import org.apache.poi.ss.formula.IStabilityClassifier;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
@@ -42,6 +45,90 @@ public final class ExcelReadUtilsTest
 {
   private static final String TEST1_XLS = "excel/test1.xls";
   private static final String TEST1_XLSX = "excel/test1.xlsx";
+
+  /**
+   * Validate reference sheets
+   * 
+   * @param aWB
+   *        Workbook to use
+   */
+  private void _validateWorkbook (@Nonnull final Workbook aWB)
+  {
+    final Sheet aSheet1 = aWB.getSheet ("Sheet1");
+    assertNotNull (aSheet1);
+    assertNotNull (aWB.getSheet ("Sheet2"));
+    final Sheet aSheet3 = aWB.getSheet ("Sheet3");
+    assertNotNull (aSheet3);
+    assertNull (aWB.getSheet ("Sheet4"));
+
+    Cell aCell = aSheet1.getRow (0).getCell (0);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
+    assertEquals ("A1", aCell.getStringCellValue ());
+
+    aCell = aSheet1.getRow (1).getCell (1);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
+    assertEquals ("B2", aCell.getStringCellValue ());
+
+    aCell = aSheet1.getRow (2).getCell (2);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
+    assertEquals ("C\n3", aCell.getStringCellValue ());
+
+    aCell = aSheet1.getRow (3).getCell (3);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_NUMERIC, aCell.getCellType ());
+    assertEquals (0.00001, 4.4, aCell.getNumericCellValue ());
+
+    for (int i = 0; i < 6; ++i)
+    {
+      aCell = aSheet3.getRow (i).getCell (i);
+      assertNotNull (aCell);
+      assertEquals (Cell.CELL_TYPE_NUMERIC, aCell.getCellType ());
+      assertEquals (0.00001, i + 1, aCell.getNumericCellValue ());
+    }
+
+    // ="abc"
+    aCell = aSheet1.getRow (4).getCell (0);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_FORMULA, aCell.getCellType ());
+    assertEquals ("\"abc\"", aCell.getCellFormula ());
+    assertEquals ("abc", aCell.getStringCellValue ());
+    CellValue aEvaluated = new ExcelFormulaEvaluator (aWB, IStabilityClassifier.TOTALLY_IMMUTABLE).evaluate (aCell);
+    assertEquals (Cell.CELL_TYPE_STRING, aEvaluated.getCellType ());
+    assertEquals ("abc", aEvaluated.getStringValue ());
+
+    // =4711
+    aCell = aSheet1.getRow (5).getCell (1);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_FORMULA, aCell.getCellType ());
+    assertEquals ("4711", aCell.getCellFormula ());
+    assertEquals (0.00001, 4711, aCell.getNumericCellValue ());
+    aEvaluated = new ExcelFormulaEvaluator (aWB, IStabilityClassifier.TOTALLY_IMMUTABLE).evaluate (aCell);
+    assertEquals (Cell.CELL_TYPE_NUMERIC, aEvaluated.getCellType ());
+    assertEquals (0.00001, 4711, aEvaluated.getNumberValue ());
+
+    // =TRUE
+    aCell = aSheet1.getRow (6).getCell (2);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_FORMULA, aCell.getCellType ());
+    assertEquals ("TRUE", aCell.getCellFormula ());
+    assertTrue (aCell.getBooleanCellValue ());
+    aEvaluated = new ExcelFormulaEvaluator (aWB, IStabilityClassifier.TOTALLY_IMMUTABLE).evaluate (aCell);
+    assertEquals (Cell.CELL_TYPE_BOOLEAN, aEvaluated.getCellType ());
+    assertTrue (aEvaluated.getBooleanValue ());
+
+    // Refers to cell at 6/2
+    aCell = aSheet1.getRow (7).getCell (3);
+    assertNotNull (aCell);
+    assertEquals (Cell.CELL_TYPE_FORMULA, aCell.getCellType ());
+    assertEquals ("C7", aCell.getCellFormula ());
+    assertTrue (aCell.getBooleanCellValue ());
+    aEvaluated = new ExcelFormulaEvaluator (aWB, IStabilityClassifier.TOTALLY_IMMUTABLE).evaluate (aCell);
+    assertEquals (Cell.CELL_TYPE_BOOLEAN, aEvaluated.getCellType ());
+    assertTrue (aEvaluated.getBooleanValue ());
+  }
 
   @Test
   public void testReadWorkbookFromInputStream ()
@@ -102,50 +189,6 @@ public final class ExcelReadUtilsTest
       aRTS.applyFont (1, 3, aFont);
       aCell.setCellValue (aRTS);
       assertEquals ("Anyhow", ExcelReadUtils.getCellValueObject (aCell));
-    }
-  }
-
-  /**
-   * Validate reference sheets
-   * 
-   * @param aWB
-   *        Workbook to use
-   */
-  private void _validateWorkbook (@Nonnull final Workbook aWB)
-  {
-    final Sheet aSheet1 = aWB.getSheet ("Sheet1");
-    assertNotNull (aSheet1);
-    assertNotNull (aWB.getSheet ("Sheet2"));
-    final Sheet aSheet3 = aWB.getSheet ("Sheet3");
-    assertNotNull (aSheet3);
-    assertNull (aWB.getSheet ("Sheet4"));
-
-    Cell aCell = aSheet1.getRow (0).getCell (0);
-    assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
-    assertEquals ("A1", aCell.getStringCellValue ());
-
-    aCell = aSheet1.getRow (1).getCell (1);
-    assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
-    assertEquals ("B2", aCell.getStringCellValue ());
-
-    aCell = aSheet1.getRow (2).getCell (2);
-    assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
-    assertEquals ("C\n3", aCell.getStringCellValue ());
-
-    aCell = aSheet1.getRow (3).getCell (3);
-    assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_NUMERIC, aCell.getCellType ());
-    assertEquals (0.00001, 4.4, aCell.getNumericCellValue ());
-
-    for (int i = 0; i < 6; ++i)
-    {
-      aCell = aSheet3.getRow (i).getCell (i);
-      assertNotNull (aCell);
-      assertEquals (Cell.CELL_TYPE_NUMERIC, aCell.getCellType ());
-      assertEquals (0.00001, i + 1, aCell.getNumericCellValue ());
     }
   }
 

@@ -108,6 +108,23 @@ public final class ExcelReadUtils
     return null;
   }
 
+  @Nonnull
+  private static Number _asNumber (final double dValue)
+  {
+    if (dValue == (int) dValue)
+    {
+      // It's not a real double value, it's an int value
+      return Integer.valueOf ((int) dValue);
+    }
+    if (dValue == (long) dValue)
+    {
+      // It's not a real double value, it's a long value
+      return Long.valueOf ((long) dValue);
+    }
+    // It's a real floating point number
+    return Double.valueOf (dValue);
+  }
+
   /**
    * Return the best matching Java object underlying the passed cell.<br>
    * Note: Date values cannot be determined automatically!
@@ -127,29 +144,26 @@ public final class ExcelReadUtils
     switch (nCellType)
     {
       case Cell.CELL_TYPE_NUMERIC:
-      {
-        final double dValue = aCell.getNumericCellValue ();
-        if (dValue == (int) dValue)
-        {
-          // It's not a real double value, it's an int value
-          return Integer.valueOf ((int) dValue);
-        }
-        if (dValue == (long) dValue)
-        {
-          // It's not a real double value, it's a long value
-          return Long.valueOf ((long) dValue);
-        }
-        // It's a real floating point number
-        return Double.valueOf (dValue);
-      }
+        return _asNumber (aCell.getNumericCellValue ());
       case Cell.CELL_TYPE_STRING:
         return aCell.getStringCellValue ();
-      case Cell.CELL_TYPE_FORMULA:
-        return aCell.getStringCellValue ();
-      case Cell.CELL_TYPE_BLANK:
-        return null;
       case Cell.CELL_TYPE_BOOLEAN:
         return Boolean.valueOf (aCell.getBooleanCellValue ());
+      case Cell.CELL_TYPE_FORMULA:
+        final int nFormulaResultType = aCell.getCachedFormulaResultType ();
+        switch (nFormulaResultType)
+        {
+          case Cell.CELL_TYPE_NUMERIC:
+            return _asNumber (aCell.getNumericCellValue ());
+          case Cell.CELL_TYPE_STRING:
+            return aCell.getStringCellValue ();
+          case Cell.CELL_TYPE_BOOLEAN:
+            return Boolean.valueOf (aCell.getBooleanCellValue ());
+          default:
+            throw new IllegalArgumentException ("The cell formula type " + nFormulaResultType + " is unsupported!");
+        }
+      case Cell.CELL_TYPE_BLANK:
+        return null;
       default:
         throw new IllegalArgumentException ("The cell type " + nCellType + " is unsupported!");
     }

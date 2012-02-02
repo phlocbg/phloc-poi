@@ -36,7 +36,7 @@
   </distributionManagement>
   
   <properties>
-    <poi.version>3.7</poi.version>
+    <poi.version>3.8-beta5</poi.version>
   </properties>
 
   <dependencies>
@@ -74,6 +74,13 @@
           <artifactId>geronimo-stax-api_1.0_spec</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-scratchpad</artifactId>
+      <version>${poi.version}</version>
+      <scope>test</scope>
     </dependency>
     
     <dependency>

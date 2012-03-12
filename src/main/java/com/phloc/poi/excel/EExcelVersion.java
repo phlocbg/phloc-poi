@@ -20,6 +20,7 @@ package com.phloc.poi.excel;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
@@ -33,6 +34,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.mime.CMimeType;
 import com.phloc.commons.mime.IMimeType;
 
@@ -92,6 +94,19 @@ public enum EExcelVersion
     {
       return CMimeType.APPLICATION_MS_EXCEL;
     }
+
+    @Override
+    public boolean hasRowLimitPerSheet ()
+    {
+      return true;
+    }
+
+    @Override
+    public int getRowLimitPerSheet ()
+    {
+      // Max row limit is 65536. The index is therefore 0up to (limit-1)
+      return 65536;
+    }
   },
   XLSX
   {
@@ -142,6 +157,18 @@ public enum EExcelVersion
     {
       return CMimeType.APPLICATION_MS_EXCEL_2007;
     }
+
+    @Override
+    public boolean hasRowLimitPerSheet ()
+    {
+      return false;
+    }
+
+    @Override
+    public int getRowLimitPerSheet ()
+    {
+      return CGlobal.ILLEGAL_UINT;
+    }
   };
 
   /**
@@ -174,4 +201,17 @@ public enum EExcelVersion
    */
   @Nonnull
   public abstract IMimeType getMimeType ();
+
+  /**
+   * @return <code>true</code> if this Excel version has a row limit inside a
+   *         sheet
+   */
+  public abstract boolean hasRowLimitPerSheet ();
+
+  /**
+   * @return the maximum number of rows per sheet (incl.) or
+   *         {@link CGlobal#ILLEGAL_UINT} if no limit exists
+   */
+  @CheckForSigned
+  public abstract int getRowLimitPerSheet ();
 }

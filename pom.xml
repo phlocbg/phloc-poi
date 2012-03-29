@@ -36,7 +36,7 @@
   </distributionManagement>
   
   <properties>
-    <poi.version>3.8-beta5</poi.version>
+    <poi.version>3.8</poi.version>
   </properties>
 
   <dependencies>

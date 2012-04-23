@@ -26,7 +26,7 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.IndexedColors;
 
 import com.phloc.commons.ICloneable;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -258,17 +258,17 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     if (!(o instanceof ExcelStyle))
       return false;
     final ExcelStyle rhs = (ExcelStyle) o;
-    return EqualsUtils.nullSafeEquals (m_eAlign, rhs.m_eAlign) &&
-           EqualsUtils.nullSafeEquals (m_eVAlign, rhs.m_eVAlign) &&
-           m_bWrapText == rhs.m_bWrapText &&
-           EqualsUtils.nullSafeEquals (m_sDataFormat, rhs.m_sDataFormat) &&
-           EqualsUtils.nullSafeEquals (m_eFillBackgroundColor, rhs.m_eFillBackgroundColor) &&
-           EqualsUtils.nullSafeEquals (m_eFillForegroundColor, rhs.m_eFillForegroundColor) &&
-           EqualsUtils.nullSafeEquals (m_eFillPattern, rhs.m_eFillPattern) &&
-           EqualsUtils.nullSafeEquals (m_eBorderTop, rhs.m_eBorderTop) &&
-           EqualsUtils.nullSafeEquals (m_eBorderRight, rhs.m_eBorderRight) &&
-           EqualsUtils.nullSafeEquals (m_eBorderBottom, rhs.m_eBorderBottom) &&
-           EqualsUtils.nullSafeEquals (m_eBorderLeft, rhs.m_eBorderLeft);
+    return EqualsUtils.equals (m_eAlign, rhs.m_eAlign) &&
+           EqualsUtils.equals (m_eVAlign, rhs.m_eVAlign) &&
+           EqualsUtils.equals (m_bWrapText, rhs.m_bWrapText) &&
+           EqualsUtils.equals (m_sDataFormat, rhs.m_sDataFormat) &&
+           EqualsUtils.equals (m_eFillBackgroundColor, rhs.m_eFillBackgroundColor) &&
+           EqualsUtils.equals (m_eFillForegroundColor, rhs.m_eFillForegroundColor) &&
+           EqualsUtils.equals (m_eFillPattern, rhs.m_eFillPattern) &&
+           EqualsUtils.equals (m_eBorderTop, rhs.m_eBorderTop) &&
+           EqualsUtils.equals (m_eBorderRight, rhs.m_eBorderRight) &&
+           EqualsUtils.equals (m_eBorderBottom, rhs.m_eBorderBottom) &&
+           EqualsUtils.equals (m_eBorderLeft, rhs.m_eBorderLeft);
   }
 
   @Override

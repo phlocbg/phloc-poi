@@ -96,7 +96,6 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     return this;
   }
 
-  @Nullable
   public boolean isWrapText ()
   {
     return m_bWrapText;

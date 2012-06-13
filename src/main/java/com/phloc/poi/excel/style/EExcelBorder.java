@@ -41,7 +41,7 @@ public enum EExcelBorder
   BORDER_MEDIUM_DASH_DOT_DOT (CellStyle.BORDER_MEDIUM_DASH_DOT_DOT),
   BORDER_SLANTED_DASH_DOT (CellStyle.BORDER_SLANTED_DASH_DOT);
 
-  private short m_nValue;
+  private final short m_nValue;
 
   private EExcelBorder (final short nValue)
   {

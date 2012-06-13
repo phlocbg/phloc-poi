@@ -46,7 +46,7 @@ public enum EExcelPattern
   LESS_DOTS (CellStyle.LESS_DOTS),
   LEAST_DOTS (CellStyle.LEAST_DOTS);
 
-  private short m_nValue;
+  private final short m_nValue;
 
   private EExcelPattern (final short nValue)
   {

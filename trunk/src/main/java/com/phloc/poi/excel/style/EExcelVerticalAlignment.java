@@ -31,7 +31,7 @@ public enum EExcelVerticalAlignment
   VERTICAL_BOTTOM (CellStyle.VERTICAL_BOTTOM),
   VERTICAL_JUSTIFY (CellStyle.VERTICAL_JUSTIFY);
 
-  private short m_nValue;
+  private final short m_nValue;
 
   private EExcelVerticalAlignment (final short nValue)
   {

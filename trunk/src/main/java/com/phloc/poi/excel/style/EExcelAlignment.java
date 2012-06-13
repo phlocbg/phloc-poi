@@ -34,7 +34,7 @@ public enum EExcelAlignment
   ALIGN_JUSTIFY (CellStyle.ALIGN_JUSTIFY),
   ALIGN_CENTER_SELECTION (CellStyle.ALIGN_CENTER_SELECTION);
 
-  private short m_nValue;
+  private final short m_nValue;
 
   private EExcelAlignment (final short nValue)
   {

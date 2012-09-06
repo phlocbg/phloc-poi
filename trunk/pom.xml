@@ -8,7 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-poi</artifactId>
-  <version>2.7.0</version>
+  <version>2.7.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>phloc-poi</name>
   <description>Wrapper around Apache POI</description>
@@ -23,9 +23,9 @@
   </licenses>
   
   <scm>
-    <url>http://code.google.com/p/phloc-poi/source/browse/tags/phloc-poi-2.7.0</url>
-    <connection>scm:svn:http://phloc-poi.googlecode.com/svn/tags/phloc-poi-2.7.0</connection>
-    <developerConnection>scm:svn:https://phloc-poi.googlecode.com/svn/tags/phloc-poi-2.7.0</developerConnection>
+    <url>http://code.google.com/p/phloc-poi/source/browse/</url>
+    <connection>scm:svn:http://phloc-poi.googlecode.com/svn/trunk</connection>
+    <developerConnection>scm:svn:https://phloc-poi.googlecode.com/svn/trunk</developerConnection>
   </scm>
   
   <repositories>

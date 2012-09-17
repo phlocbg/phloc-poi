@@ -19,7 +19,6 @@ package com.phloc.poi;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.poi.util.POISLF4JLogger;
 
 import com.phloc.commons.SystemProperties;
 

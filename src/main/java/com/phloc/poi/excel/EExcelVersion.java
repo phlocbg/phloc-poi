@@ -37,6 +37,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.mime.CMimeType;
 import com.phloc.commons.mime.IMimeType;
+import com.phloc.poi.POISetup;
 
 /**
  * Encapsulates the main differences between the different excel versions.
@@ -170,6 +171,11 @@ public enum EExcelVersion
       return CGlobal.ILLEGAL_UINT;
     }
   };
+
+  static
+  {
+    POISetup.initOnDemand ();
+  }
 
   /**
    * @return A newly created workbook of this version

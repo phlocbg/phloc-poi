@@ -307,7 +307,7 @@ public final class WorkbookCreationHelper
       }
       catch (final IllegalArgumentException ex)
       {
-        // Happens if a column is too larger
+        // Happens if a column is too large
         s_aLogger.warn ("Failed to resize column " + nCol + ": column too wide!");
       }
   }
@@ -320,7 +320,7 @@ public final class WorkbookCreationHelper
     // Set auto filter on all columns
     // Always on the first row (param1, param2)
     // From first column to last column (param3, param4)
-    m_aLastSheet.setAutoFilter (new CellRangeAddress (0, 0, 0, m_nMaxCellIndex));
+    m_aLastSheet.setAutoFilter (new CellRangeAddress (0, 0, 0, m_nMaxCellIndex - 1));
   }
 
   /**
@@ -339,8 +339,8 @@ public final class WorkbookCreationHelper
 
     try
     {
-      if (m_nCreatedCellStyles > 0)
-        s_aLogger.info ("Writing Excel workbook with " + m_nCreatedCellStyles + " different cell styles");
+      if (m_nCreatedCellStyles > 0 && s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Writing Excel workbook with " + m_nCreatedCellStyles + " different cell styles");
 
       m_aWB.write (aOS);
       return ESuccess.SUCCESS;
@@ -348,7 +348,7 @@ public final class WorkbookCreationHelper
     catch (final IOException ex)
     {
       if (!StreamUtils.isKnownEOFException (ex))
-        s_aLogger.warn ("Failed to write Excel workbook to output stream " + aOS, ex);
+        s_aLogger.error ("Failed to write Excel workbook to output stream " + aOS, ex);
       return ESuccess.FAILURE;
     }
     finally

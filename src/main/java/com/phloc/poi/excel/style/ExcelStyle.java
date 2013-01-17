@@ -24,6 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Workbook;
 
 import com.phloc.commons.ICloneable;
 import com.phloc.commons.equals.EqualsUtils;
@@ -51,6 +52,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
   private EExcelBorder m_eBorderRight;
   private EExcelBorder m_eBorderBottom;
   private EExcelBorder m_eBorderLeft;
+  private short m_nFontIndex = -1;
 
   public ExcelStyle ()
   {}
@@ -68,6 +70,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     m_eBorderRight = rhs.m_eBorderRight;
     m_eBorderBottom = rhs.m_eBorderBottom;
     m_eBorderLeft = rhs.m_eBorderLeft;
+    m_nFontIndex = rhs.m_nFontIndex;
   }
 
   @Nullable
@@ -218,13 +221,35 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     return setBorderTop (eBorder).setBorderRight (eBorder).setBorderBottom (eBorder).setBorderLeft (eBorder);
   }
 
+  public short getFontIndex ()
+  {
+    return m_nFontIndex;
+  }
+
+  /**
+   * Set the index of the font to use. The font must have been previously
+   * created via Workbook.createFont()!
+   * 
+   * @param nFontIndex
+   *        The font index to use. Values &lt; 0 indicate no font to use
+   * @return this
+   */
+  @Nonnull
+  public ExcelStyle setFontIndex (final short nFontIndex)
+  {
+    m_nFontIndex = nFontIndex;
+    return this;
+  }
+
   @Nonnull
   public ExcelStyle getClone ()
   {
     return new ExcelStyle (this);
   }
 
-  public void fillCellStyle (@Nonnull final CellStyle aCS, @Nonnull final CreationHelper aCreationHelper)
+  public void fillCellStyle (@Nonnull final Workbook aWB,
+                             @Nonnull final CellStyle aCS,
+                             @Nonnull final CreationHelper aCreationHelper)
   {
     if (m_eAlign != null)
       aCS.setAlignment (m_eAlign.getValue ());
@@ -247,6 +272,8 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
       aCS.setBorderBottom (m_eBorderBottom.getValue ());
     if (m_eBorderLeft != null)
       aCS.setBorderLeft (m_eBorderLeft.getValue ());
+    if (m_nFontIndex > 0)
+      aCS.setFont (aWB.getFontAt (m_nFontIndex));
   }
 
   @Override
@@ -259,7 +286,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     final ExcelStyle rhs = (ExcelStyle) o;
     return EqualsUtils.equals (m_eAlign, rhs.m_eAlign) &&
            EqualsUtils.equals (m_eVAlign, rhs.m_eVAlign) &&
-           EqualsUtils.equals (m_bWrapText, rhs.m_bWrapText) &&
+           m_bWrapText == rhs.m_bWrapText &&
            EqualsUtils.equals (m_sDataFormat, rhs.m_sDataFormat) &&
            EqualsUtils.equals (m_eFillBackgroundColor, rhs.m_eFillBackgroundColor) &&
            EqualsUtils.equals (m_eFillForegroundColor, rhs.m_eFillForegroundColor) &&
@@ -267,7 +294,8 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
            EqualsUtils.equals (m_eBorderTop, rhs.m_eBorderTop) &&
            EqualsUtils.equals (m_eBorderRight, rhs.m_eBorderRight) &&
            EqualsUtils.equals (m_eBorderBottom, rhs.m_eBorderBottom) &&
-           EqualsUtils.equals (m_eBorderLeft, rhs.m_eBorderLeft);
+           EqualsUtils.equals (m_eBorderLeft, rhs.m_eBorderLeft) &&
+           m_nFontIndex == rhs.m_nFontIndex;
   }
 
   @Override
@@ -284,6 +312,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
                                        .append (m_eBorderRight)
                                        .append (m_eBorderBottom)
                                        .append (m_eBorderLeft)
+                                       .append (m_nFontIndex)
                                        .getHashCode ();
   }
 
@@ -301,6 +330,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
                                        .appendIfNotNull ("borderRight", m_eBorderRight)
                                        .appendIfNotNull ("borderBottom", m_eBorderBottom)
                                        .appendIfNotNull ("borderLeft", m_eBorderLeft)
+                                       .append ("fontIndex", m_nFontIndex)
                                        .toString ();
   }
 }

@@ -123,7 +123,7 @@ public final class WorkbookCreationHelper
   }
 
   /**
-   * @return The number of rows in the current sheet
+   * @return The number of rows in the current sheet, 0-based.
    */
   @Nonnegative
   public int getRowCount ()
@@ -155,6 +155,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final boolean bValue)
   {
     final Cell aCell = addCell ();
+    aCell.setCellType (Cell.CELL_TYPE_BOOLEAN);
     aCell.setCellValue (bValue);
     return aCell;
   }
@@ -169,6 +170,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final Calendar aValue)
   {
     final Cell aCell = addCell ();
+    aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
     aCell.setCellValue (aValue);
     return aCell;
   }
@@ -183,6 +185,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final Date aValue)
   {
     final Cell aCell = addCell ();
+    aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
     aCell.setCellValue (aValue);
     return aCell;
   }
@@ -197,6 +200,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final double dValue)
   {
     final Cell aCell = addCell ();
+    aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
     aCell.setCellValue (dValue);
     return aCell;
   }
@@ -211,6 +215,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final RichTextString aValue)
   {
     final Cell aCell = addCell ();
+    aCell.setCellType (Cell.CELL_TYPE_STRING);
     aCell.setCellValue (aValue);
     return aCell;
   }
@@ -225,7 +230,23 @@ public final class WorkbookCreationHelper
   public Cell addCell (final String sValue)
   {
     final Cell aCell = addCell ();
+    aCell.setCellType (Cell.CELL_TYPE_STRING);
     aCell.setCellValue (sValue);
+    return aCell;
+  }
+
+  /**
+   * @param sFormula
+   *        The formula to be set. May be <code>null</code> to set no formula.
+   * @return A new cell in the current row of the current sheet with the passed
+   *         formula
+   */
+  @Nonnull
+  public Cell addCellFormula (@Nullable final String sFormula)
+  {
+    final Cell aCell = addCell ();
+    aCell.setCellType (Cell.CELL_TYPE_FORMULA);
+    aCell.setCellFormula (sFormula);
     return aCell;
   }
 
@@ -246,7 +267,7 @@ public final class WorkbookCreationHelper
     if (aCellStyle == null)
     {
       aCellStyle = m_aWB.createCellStyle ();
-      aExcelStyle.fillCellStyle (aCellStyle, m_aCreationHelper);
+      aExcelStyle.fillCellStyle (m_aWB, aCellStyle, m_aCreationHelper);
       m_aStyleCache.addCellStyle (aExcelStyle, aCellStyle);
       m_nCreatedCellStyles++;
     }
@@ -254,7 +275,8 @@ public final class WorkbookCreationHelper
   }
 
   /**
-   * @return The number of cells in the current row in the current sheet
+   * @return The number of cells in the current row in the current sheet,
+   *         0-based
    */
   @Nonnegative
   public int getCellCountInRow ()
@@ -263,7 +285,8 @@ public final class WorkbookCreationHelper
   }
 
   /**
-   * @return The maximum number of cells in a single row in the current sheet.
+   * @return The maximum number of cells in a single row in the current sheet,
+   *         0-based.
    */
   @Nonnegative
   public int getMaximumCellCountInRowInSheet ()

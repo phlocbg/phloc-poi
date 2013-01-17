@@ -50,14 +50,14 @@ public enum EExcelVersion
   {
     @Override
     @Nonnull
-    public Workbook createWorkbook ()
+    public HSSFWorkbook createWorkbook ()
     {
       return new HSSFWorkbook ();
     }
 
     @Override
     @Nullable
-    public Workbook readWorkbook (@Nonnull @WillClose final InputStream aIS)
+    public HSSFWorkbook readWorkbook (@Nonnull @WillClose final InputStream aIS)
     {
       try
       {
@@ -77,7 +77,7 @@ public enum EExcelVersion
 
     @Override
     @Nonnull
-    public RichTextString createRichText (final String sValue)
+    public HSSFRichTextString createRichText (final String sValue)
     {
       return new HSSFRichTextString (sValue);
     }
@@ -113,14 +113,14 @@ public enum EExcelVersion
   {
     @Override
     @Nonnull
-    public Workbook createWorkbook ()
+    public XSSFWorkbook createWorkbook ()
     {
       return new XSSFWorkbook ();
     }
 
     @Override
     @Nullable
-    public Workbook readWorkbook (@Nonnull @WillClose final InputStream aIS)
+    public XSSFWorkbook readWorkbook (@Nonnull @WillClose final InputStream aIS)
     {
       try
       {
@@ -140,7 +140,7 @@ public enum EExcelVersion
 
     @Override
     @Nonnull
-    public RichTextString createRichText (final String sValue)
+    public XSSFRichTextString createRichText (final String sValue)
     {
       return new XSSFRichTextString (sValue);
     }

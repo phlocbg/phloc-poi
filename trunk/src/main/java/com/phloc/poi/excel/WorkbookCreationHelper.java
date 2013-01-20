@@ -313,14 +313,24 @@ public final class WorkbookCreationHelper
   }
 
   /**
-   * Add an auto filter on all columns in the current sheet.
+   * Add an auto filter on the first row on all columns in the current sheet.
    */
   public void autoFilterAllColumns ()
   {
+    autoFilterAllColumns (0);
+  }
+
+  /**
+   * @param nRowIndex
+   *        The 0-based index of the row, where to set the filter. Add an auto
+   *        filter on all columns in the current sheet.
+   */
+  public void autoFilterAllColumns (@Nonnegative final int nRowIndex)
+  {
     // Set auto filter on all columns
-    // Always on the first row (param1, param2)
+    // Use the specified row (param1, param2)
     // From first column to last column (param3, param4)
-    m_aLastSheet.setAutoFilter (new CellRangeAddress (0, 0, 0, m_nMaxCellIndex - 1));
+    m_aLastSheet.setAutoFilter (new CellRangeAddress (nRowIndex, nRowIndex, 0, m_nMaxCellIndex - 1));
   }
 
   /**

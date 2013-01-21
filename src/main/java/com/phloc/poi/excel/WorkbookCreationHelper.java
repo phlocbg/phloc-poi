@@ -17,6 +17,7 @@
  */
 package com.phloc.poi.excel;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
@@ -38,6 +39,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
 import com.phloc.poi.excel.style.ExcelStyle;
@@ -331,6 +333,32 @@ public final class WorkbookCreationHelper
     // Use the specified row (param1, param2)
     // From first column to last column (param3, param4)
     m_aLastSheet.setAutoFilter (new CellRangeAddress (nRowIndex, nRowIndex, 0, m_nMaxCellIndex - 1));
+  }
+
+  /**
+   * Write the current workbook to a file
+   * 
+   * @param sFilename
+   *        The file to write to. May not be <code>null</code>.
+   * @return {@link ESuccess}
+   */
+  @Nonnull
+  public ESuccess write (@Nonnull final String sFilename)
+  {
+    return write (FileUtils.getOutputStream (sFilename));
+  }
+
+  /**
+   * Write the current workbook to a file
+   * 
+   * @param aFile
+   *        The file to write to. May not be <code>null</code>.
+   * @return {@link ESuccess}
+   */
+  @Nonnull
+  public ESuccess write (@Nonnull final File aFile)
+  {
+    return write (FileUtils.getOutputStream (aFile));
   }
 
   /**

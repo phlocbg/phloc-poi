@@ -17,6 +17,9 @@
  */
 package com.phloc.poi.excel;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.formula.IStabilityClassifier;
@@ -31,12 +34,12 @@ public class ExcelFormulaEvaluator
 {
   private final FormulaEvaluator m_aEvaluator;
 
-  public ExcelFormulaEvaluator (final Workbook aWB)
+  public ExcelFormulaEvaluator (@Nonnull final Workbook aWB)
   {
-    this (aWB, null);
+    m_aEvaluator = aWB.getCreationHelper ().createFormulaEvaluator ();
   }
 
-  public ExcelFormulaEvaluator (final Workbook aWB, final IStabilityClassifier aStability)
+  public ExcelFormulaEvaluator (@Nonnull final Workbook aWB, @Nullable final IStabilityClassifier aStability)
   {
     m_aEvaluator = aWB instanceof HSSFWorkbook ? new HSSFFormulaEvaluator ((HSSFWorkbook) aWB, aStability)
                                               : XSSFFormulaEvaluator.create ((XSSFWorkbook) aWB, aStability, null);
@@ -51,7 +54,7 @@ public class ExcelFormulaEvaluator
    * @param aCell
    *        The cell to evaluate
    */
-  public CellValue evaluate (final Cell aCell)
+  public CellValue evaluate (@Nonnull final Cell aCell)
   {
     return m_aEvaluator.evaluate (aCell);
   }
@@ -76,7 +79,7 @@ public class ExcelFormulaEvaluator
    * @return The type of the formula result (the cell's type remains as
    *         Cell.CELL_TYPE_FORMULA however)
    */
-  public int evaluateFormulaCell (final Cell aCell)
+  public int evaluateFormulaCell (@Nonnull final Cell aCell)
   {
     return m_aEvaluator.evaluateFormulaCell (aCell);
   }
@@ -97,7 +100,8 @@ public class ExcelFormulaEvaluator
    * 
    * @param aCell
    */
-  public Cell evaluateInCell (final Cell aCell)
+  @Nonnull
+  public Cell evaluateInCell (@Nonnull final Cell aCell)
   {
     return m_aEvaluator.evaluateInCell (aCell);
   }

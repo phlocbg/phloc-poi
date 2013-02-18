@@ -39,6 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class ExcelStyle implements ICloneable <ExcelStyle>
 {
+  /** By default text wrapping is disabled */
   public static final boolean DEFAULT_WRAP_TEXT = false;
 
   private EExcelAlignment m_eAlign;

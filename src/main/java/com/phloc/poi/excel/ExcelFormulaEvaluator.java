@@ -53,6 +53,7 @@ public class ExcelFormulaEvaluator
    * 
    * @param aCell
    *        The cell to evaluate
+   * @return The evaluation result
    */
   public CellValue evaluate (@Nonnull final Cell aCell)
   {
@@ -99,6 +100,7 @@ public class ExcelFormulaEvaluator
    * {@link #evaluateFormulaCell(Cell)}
    * 
    * @param aCell
+   * @return The cell in which it was evaluated
    */
   @Nonnull
   public Cell evaluateInCell (@Nonnull final Cell aCell)

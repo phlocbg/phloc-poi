@@ -135,6 +135,8 @@ public class POISLF4JLogger extends SystemOutLogger
    * 
    * @param nLevel
    *        One of DEBUG, INFO, WARN, ERROR, FATAL
+   * @return <code>true</code> if the logger can handle the specified error
+   *         level
    */
   @Override
   public boolean check (final int nLevel)

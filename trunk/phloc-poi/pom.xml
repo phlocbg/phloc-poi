@@ -24,8 +24,8 @@
   
   <scm>
     <url>http://code.google.com/p/phloc-poi/source/browse/</url>
-    <connection>scm:svn:http://phloc-poi.googlecode.com/svn/trunk</connection>
-    <developerConnection>scm:svn:https://phloc-poi.googlecode.com/svn/trunk</developerConnection>
+    <connection>scm:svn:http://phloc-poi.googlecode.com/svn/trunk/phloc-poi</connection>
+    <developerConnection>scm:svn:https://phloc-poi.googlecode.com/svn/trunk/phloc-poi</developerConnection>
   </scm>
 
   <organization>

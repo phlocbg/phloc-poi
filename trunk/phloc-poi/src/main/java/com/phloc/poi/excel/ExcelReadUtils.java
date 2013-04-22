@@ -42,7 +42,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 /**
  * Misc Excel read helper methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ExcelReadUtils

@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * from {@link SystemOutLogger}, because the super class
  * {@link org.apache.poi.util.POILogger} only has a package-private ctor.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class POISLF4JLogger extends SystemOutLogger
 {

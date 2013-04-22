@@ -28,7 +28,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 /**
  * A caching class that maps {@link ExcelStyle} objects to {@link CellStyle}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ExcelStyleCache
 {

@@ -39,7 +39,7 @@ import com.phloc.commons.io.resource.ClassPathResource;
 /**
  * Test class for class {@link ExcelReadUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ExcelReadUtilsTest
 {

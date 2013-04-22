@@ -25,7 +25,7 @@ import com.phloc.commons.SystemProperties;
 /**
  * This class can be used to initialize POI to work best with the phloc stack.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class POISetup
 {

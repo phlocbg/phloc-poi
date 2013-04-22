@@ -48,7 +48,7 @@ import com.phloc.poi.excel.style.ExcelStyleCache;
 /**
  * A utility class for creating very simple Excel workbooks.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class WorkbookCreationHelper
 {

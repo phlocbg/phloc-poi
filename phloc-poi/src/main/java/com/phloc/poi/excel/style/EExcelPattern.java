@@ -22,7 +22,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 /**
  * Excel pattern types
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EExcelPattern
 {

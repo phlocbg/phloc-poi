@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Represents a single excel style with enums instead of numeric values.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ExcelStyle implements ICloneable <ExcelStyle>

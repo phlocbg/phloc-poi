@@ -42,7 +42,7 @@ import com.phloc.poi.POISetup;
 /**
  * Encapsulates the main differences between the different excel versions.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EExcelVersion
 {

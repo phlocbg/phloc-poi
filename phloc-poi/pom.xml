@@ -84,7 +84,7 @@
   </distributionManagement>
   
   <properties>
-    <poi.version>3.10-beta1</poi.version>
+    <poi.version>3.9</poi.version>
   </properties>
 
   <dependencies>

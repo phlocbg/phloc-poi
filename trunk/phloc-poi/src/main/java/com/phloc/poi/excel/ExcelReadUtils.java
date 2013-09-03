@@ -177,6 +177,18 @@ public final class ExcelReadUtils
   }
 
   @Nullable
+  public static Boolean getCellValueBoolean (@Nullable final Cell aCell)
+  {
+    final Object aValue = getCellValueObject (aCell);
+    if (aValue != null && !(aValue instanceof Boolean))
+    {
+      s_aLogger.warn ("Failed to get cell value as boolean: " + aValue.getClass ());
+      return null;
+    }
+    return (Boolean) aValue;
+  }
+
+  @Nullable
   public static Number getCellValueNumber (@Nullable final Cell aCell)
   {
     final Object aValue = getCellValueObject (aCell);

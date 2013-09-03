@@ -149,7 +149,7 @@
         <artifactId>maven-license-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>src/test/resources/excel/**</exclude>
+            <exclude>src/test/resources/**</exclude>
           </excludes>
         </configuration>
       </plugin>

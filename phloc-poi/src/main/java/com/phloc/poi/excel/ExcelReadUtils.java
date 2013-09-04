@@ -39,6 +39,8 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.streams.StreamUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Misc Excel read helper methods.
  * 
@@ -177,6 +179,7 @@ public final class ExcelReadUtils
   }
 
   @Nullable
+  @SuppressFBWarnings ("NP_BOOLEAN_RETURN_NULL")
   public static Boolean getCellValueBoolean (@Nullable final Cell aCell)
   {
     final Object aValue = getCellValueObject (aCell);

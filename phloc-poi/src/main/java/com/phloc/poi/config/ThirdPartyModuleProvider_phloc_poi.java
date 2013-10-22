@@ -35,11 +35,11 @@ import com.phloc.commons.version.Version;
 @IsSPIImplementation
 public final class ThirdPartyModuleProvider_phloc_poi implements IThirdPartyModuleProviderSPI
 {
-  private static final IThirdPartyModule POI = new ThirdPartyModule ("Apache POI",
-                                                                     "Apache",
-                                                                     ELicense.APACHE2,
-                                                                     new Version (3, 9, 0),
-                                                                     "http://poi.apache.org/");
+  public static final IThirdPartyModule POI = new ThirdPartyModule ("Apache POI",
+                                                                    "Apache",
+                                                                    ELicense.APACHE2,
+                                                                    new Version (3, 9, 0),
+                                                                    "http://poi.apache.org/");
 
   @Nullable
   public IThirdPartyModule [] getAllThirdPartyModules ()

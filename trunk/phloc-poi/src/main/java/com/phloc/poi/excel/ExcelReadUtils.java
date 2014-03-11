@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.streams.StreamUtils;
+import com.phloc.commons.string.StringHelper;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -179,6 +180,24 @@ public final class ExcelReadUtils
   }
 
   @Nullable
+  public static String getCellValueNormalizedString (@Nullable final Cell aCell)
+  {
+    final String sValue = getCellValueString (aCell);
+    if (sValue == null)
+      return null;
+
+    // Remove all control characters
+    final char [] aChars = sValue.toCharArray ();
+    final StringBuilder aSB = new StringBuilder (aChars.length);
+    for (final char c : aChars)
+      if (Character.getType (c) != Character.CONTROL)
+        aSB.append (c);
+
+    // And trim away all unnecessary spaces
+    return StringHelper.replaceAllRepeatedly (aSB.toString ().trim (), "  ", " ");
+  }
+
+  @Nullable
   @SuppressFBWarnings ("NP_BOOLEAN_RETURN_NULL")
   public static Boolean getCellValueBoolean (@Nullable final Cell aCell)
   {
@@ -245,5 +264,13 @@ public final class ExcelReadUtils
   public static Hyperlink getHyperlink (@Nullable final Cell aCell)
   {
     return aCell == null ? null : aCell.getHyperlink ();
+  }
+
+  public static boolean canBeReadAsNumericCell (@Nullable final Cell aCell)
+  {
+    if (aCell == null)
+      return false;
+    final int nType = aCell.getCellType ();
+    return nType == Cell.CELL_TYPE_BLANK || nType == Cell.CELL_TYPE_NUMERIC || nType == Cell.CELL_TYPE_FORMULA;
   }
 }

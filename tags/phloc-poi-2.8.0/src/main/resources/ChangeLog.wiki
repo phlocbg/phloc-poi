@@ -1,0 +1,41 @@
+#summary Change log of phloc-poi
+= Change log =
+<wiki:comment>This content is generated. Do not modify!</wiki:comment>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>3/11/14</td><td colspan="4">_Release *2.8.0*_</td></tr>
+<tr><td>3/11/14</td><td>update</td><td>tech</td><td></td><td>Updated to POI 3.10-FINAL</td></tr>
+<tr border="1"><td>9/3/13</td><td colspan="4">_Release *2.7.8*_</td></tr>
+<tr><td>9/3/13</td><td>update</td><td>tech</td><td></td><td>Using stable POI version 3.9</td></tr>
+<tr border="1"><td>8/29/13</td><td colspan="4">_Release *2.7.7*_</td></tr>
+<tr><td>8/28/13</td><td>update</td><td>tech</td><td></td><td>Updated to [http://code.google.com/p/phloc-commons phloc-commons] 4.0.9</td></tr>
+<tr><td>4/17/13</td><td>update</td><td>tech</td><td></td><td>Updated to [http://code.google.com/p/phloc-commons phloc-commons] 4.0.3</td></tr>
+<tr border="1"><td>1/21/13</td><td colspan="4">_Release *2.7.6*_</td></tr>
+<tr><td>1/17/13</td><td>add</td><td>api</td><td></td><td>Extended ExcelStyle to support Workbook fonts</td></tr>
+<tr><td>1/17/13</td><td>add</td><td>api</td><td></td><td>Extended WorkbookCreationHelper to easily set formulas</td></tr>
+<tr border="1"><td>12/14/12</td><td colspan="4">_Release *2.7.5*_</td></tr>
+<tr><td>12/14/12</td><td>update</td><td>tech</td><td></td><td>Updated to Apache POI 3.9</td></tr>
+<tr><td>9/20/12</td><td>update</td><td>performance</td><td></td><td>Performance improvement by using [http://code.google.com/p/phloc-commons phloc-commons] 3.8.4</td></tr>
+<tr border="1"><td>9/17/12</td><td colspan="4">_Release *2.7.1*_</td></tr>
+<tr><td>9/17/12</td><td>add</td><td>tech</td><td></td><td>Added POILogger implementation for SLF4J and initializing in EExcelVersion</td></tr>
+<tr border="1"><td>9/6/12</td><td colspan="4">_Release *2.7.0*_</td></tr>
+<tr><td>9/6/12</td><td>update</td><td>tech</td><td></td><td>Updated to [http://code.google.com/p/phloc-commons phloc-commons] 3.8.0</td></tr>
+<tr border="1"><td>4/23/12</td><td colspan="4">_Release *2.6.5*_</td></tr>
+<tr><td>4/23/12</td><td>update</td><td>tech</td><td>*yes*</td><td>Updated to [http://code.google.com/p/phloc-commons phloc-commons] 3.5.0</td></tr>
+<tr border="1"><td>3/29/12</td><td colspan="4">_Release *2.6.4*_</td></tr>
+<tr><td>3/29/12</td><td>update</td><td>tech</td><td></td><td>Updated to Apache POI 3.8</td></tr>
+<tr border="1"><td>3/12/12</td><td colspan="4">_Release *2.6.3*_</td></tr>
+<tr><td>3/9/12</td><td>add</td><td>api</td><td></td><td>Added new methods in EExcelVersion concerning the maximum rows per sheet</td></tr>
+<tr border="1"><td>1/17/12</td><td colspan="4">_Release *2.6.2*_</td></tr>
+<tr><td>1/17/12</td><td>fix</td><td>tech</td><td></td><td>Fixed how the ExcelReadUtils handle formula values</td></tr>
+<tr><td>1/17/12</td><td>add</td><td>api</td><td></td><td>Added new class ExcelFormulaEvaluator for easy formula evaluation</td></tr>
+<tr border="1"><td>1/6/12</td><td colspan="4">_Release *2.6.1*_</td></tr>
+<tr><td>1/6/12</td><td>change</td><td>tech</td><td></td><td>Made the ExcelReadUtils.getCell...Value... methods more solid</td></tr>
+<tr><td>1/6/12</td><td>add</td><td>api</td><td></td><td>New method ExcelReadUtils.readWorkbookFromInputStream to read any Excel file (XLS and XLSX)</td></tr>
+<tr border="1"><td>11/12/11</td><td colspan="4">_Release *2.6.0*_</td></tr>
+<tr><td>11/12/11</td><td>add</td><td>api</td><td></td><td>Added ExcelStyle getter methods</td></tr>
+<tr><td>11/12/11</td><td>fix</td><td>tech</td><td></td><td>Fixed ExcelStyle cloning</td></tr>
+<tr><td>11/12/11</td><td>fix</td><td>tech</td><td></td><td>Fixed method names of ExcelStyle</td></tr>
+<tr><td>11/11/11</td><td>add</td><td>api</td><td></td><td>Extended ExcelReadUtils API slightly</td></tr>
+<tr><td>11/8/11</td><td>add</td><td>api</td><td></td><td>Added API to read Excel files from InputStream in EExcelVersion</td></tr>
+<tr border="1"><td>7/26/11</td><td colspan="4">_Release *2.5.0*_</td></tr>
+</tbody></table>

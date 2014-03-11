@@ -38,7 +38,7 @@ public final class ThirdPartyModuleProvider_phloc_poi implements IThirdPartyModu
   public static final IThirdPartyModule POI = new ThirdPartyModule ("Apache POI",
                                                                     "Apache",
                                                                     ELicense.APACHE2,
-                                                                    new Version (3, 9, 0),
+                                                                    new Version (3, 10, 0),
                                                                     "http://poi.apache.org/");
 
   @Nullable

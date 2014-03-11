@@ -20,6 +20,12 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-poi">
+  <release date="2014-03-11" version="2.8.0" />
+  <entry date="2014-03-11" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to POI 3.10-FINAL</text>
+    </change>
+  </entry>
   <release date="2013-09-03" version="2.7.8" />
   <entry date="2013-09-03" category="tech" action="update">
     <change>

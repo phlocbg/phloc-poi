@@ -31,6 +31,7 @@ import javax.annotation.WillClose;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -39,6 +40,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
@@ -47,7 +49,7 @@ import com.phloc.poi.excel.style.ExcelStyleCache;
 
 /**
  * A utility class for creating very simple Excel workbooks.
- * 
+ *
  * @author Philip Helger
  */
 public final class WorkbookCreationHelper
@@ -72,9 +74,7 @@ public final class WorkbookCreationHelper
 
   public WorkbookCreationHelper (@Nonnull final Workbook aWB)
   {
-    if (aWB == null)
-      throw new NullPointerException ("workbook");
-    m_aWB = aWB;
+    m_aWB = ValueEnforcer.notNull (aWB, "Workbook");
     m_aCreationHelper = aWB.getCreationHelper ();
   }
 
@@ -82,6 +82,17 @@ public final class WorkbookCreationHelper
   public Workbook getWorkbook ()
   {
     return m_aWB;
+  }
+
+  /**
+   * Create a new font in the passed workbook.
+   *
+   * @return The created font.
+   */
+  @Nonnull
+  public Font createFont ()
+  {
+    return m_aWB.createFont ();
   }
 
   /**
@@ -95,7 +106,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Create a new sheet with an optional name
-   * 
+   *
    * @param sName
    *        The name to be used. May be <code>null</code>.
    * @return The created workbook sheet
@@ -254,14 +265,13 @@ public final class WorkbookCreationHelper
 
   /**
    * Set the cell style of the last added cell
-   * 
+   *
    * @param aExcelStyle
    *        The style to be set.
    */
   public void addCellStyle (@Nonnull final ExcelStyle aExcelStyle)
   {
-    if (aExcelStyle == null)
-      throw new NullPointerException ("excelStyle");
+    ValueEnforcer.notNull (aExcelStyle, "ExcelStyle");
     if (m_aLastCell == null)
       throw new IllegalStateException ("No cell present for current row!");
 
@@ -337,7 +347,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Write the current workbook to a file
-   * 
+   *
    * @param sFilename
    *        The file to write to. May not be <code>null</code>.
    * @return {@link ESuccess}
@@ -350,7 +360,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Write the current workbook to a file
-   * 
+   *
    * @param aFile
    *        The file to write to. May not be <code>null</code>.
    * @return {@link ESuccess}
@@ -363,7 +373,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Write the current workbook to an output stream.
-   * 
+   *
    * @param aOS
    *        The output stream to write to. May not be <code>null</code>. Is
    *        automatically closed independent of the success state.
@@ -372,8 +382,7 @@ public final class WorkbookCreationHelper
   @Nonnull
   public ESuccess write (@Nonnull @WillClose final OutputStream aOS)
   {
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
+    ValueEnforcer.notNull (aOS, "OutputStream");
 
     try
     {

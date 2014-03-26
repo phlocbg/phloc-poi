@@ -112,7 +112,7 @@ public final class ExcelReadUtils
   }
 
   @Nonnull
-  private static Number _asNumber (final double dValue)
+  private static Number _getAsNumberObject (final double dValue)
   {
     if (dValue == (int) dValue)
     {
@@ -147,7 +147,7 @@ public final class ExcelReadUtils
     switch (nCellType)
     {
       case Cell.CELL_TYPE_NUMERIC:
-        return _asNumber (aCell.getNumericCellValue ());
+        return _getAsNumberObject (aCell.getNumericCellValue ());
       case Cell.CELL_TYPE_STRING:
         return aCell.getStringCellValue ();
       case Cell.CELL_TYPE_BOOLEAN:
@@ -157,7 +157,7 @@ public final class ExcelReadUtils
         switch (nFormulaResultType)
         {
           case Cell.CELL_TYPE_NUMERIC:
-            return _asNumber (aCell.getNumericCellValue ());
+            return _getAsNumberObject (aCell.getNumericCellValue ());
           case Cell.CELL_TYPE_STRING:
             return aCell.getStringCellValue ();
           case Cell.CELL_TYPE_BOOLEAN:

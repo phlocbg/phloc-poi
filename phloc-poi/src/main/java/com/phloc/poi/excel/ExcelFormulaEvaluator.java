@@ -30,6 +30,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.phloc.commons.string.ToStringGenerator;
+
 public class ExcelFormulaEvaluator
 {
   private final FormulaEvaluator m_aEvaluator;
@@ -50,7 +52,7 @@ public class ExcelFormulaEvaluator
    * CellValue simply copies the appropriate cell value from the cell and also
    * its cell type. This method should be preferred over evaluateInCell() when
    * the call should not modify the contents of the original cell.
-   * 
+   *
    * @param aCell
    *        The cell to evaluate
    * @return The evaluation result
@@ -66,15 +68,15 @@ public class ExcelFormulaEvaluator
    * contain formula, this method leaves the cell unchanged. Note that the type
    * of the formula result is returned, so you know what kind of value is also
    * stored with the formula.
-   * 
+   *
    * <pre>
    * int evaluatedCellType = evaluator.evaluateFormulaCell (cell);
    * </pre>
-   * 
+   *
    * Be aware that your cell will hold both the formula, and the result. If you
    * want the cell replaced with the result of the formula, use
    * {@link #evaluateInCell(Cell)}
-   * 
+   *
    * @param aCell
    *        The cell to evaluate
    * @return The type of the formula result (the cell's type remains as
@@ -90,15 +92,15 @@ public class ExcelFormulaEvaluator
    * result back into the cell, in place of the old formula. Else if cell does
    * not contain formula, this method leaves the cell unchanged. Note that the
    * same instance of Cell is returned to allow chained calls like:
-   * 
+   *
    * <pre>
    * int evaluatedCellType = evaluator.evaluateInCell (cell).getCellType ();
    * </pre>
-   * 
+   *
    * Be aware that your cell value will be changed to hold the result of the
    * formula. If you simply want the formula value computed for you, use
    * {@link #evaluateFormulaCell(Cell)}
-   * 
+   *
    * @param aCell
    * @return The cell in which it was evaluated
    */
@@ -106,5 +108,11 @@ public class ExcelFormulaEvaluator
   public Cell evaluateInCell (@Nonnull final Cell aCell)
   {
     return m_aEvaluator.evaluateInCell (aCell);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("evaluator", m_aEvaluator).toString ();
   }
 }

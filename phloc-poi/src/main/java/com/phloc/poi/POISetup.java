@@ -19,26 +19,35 @@ package com.phloc.poi;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.SystemProperties;
 
 /**
  * This class can be used to initialize POI to work best with the phloc stack.
- * 
+ *
  * @author Philip Helger
  */
+@ThreadSafe
 public final class POISetup
 {
+  public static final String SYS_PROP_POI_LOGGER = "org.apache.poi.util.POILogger";
   private static final AtomicBoolean s_aInited = new AtomicBoolean (false);
 
   private POISetup ()
   {}
 
+  public static void enableCustomLogger (final boolean bEnable)
+  {
+    if (bEnable)
+      SystemProperties.setPropertyValue (SYS_PROP_POI_LOGGER, POISLF4JLogger.class.getName ());
+    else
+      SystemProperties.removePropertyValue (SYS_PROP_POI_LOGGER);
+  }
+
   public static void initOnDemand ()
   {
     if (s_aInited.compareAndSet (false, true))
-    {
-      SystemProperties.setPropertyValue ("org.apache.poi.util.POILogger", POISLF4JLogger.class.getName ());
-    }
+      enableCustomLogger (true);
   }
 }

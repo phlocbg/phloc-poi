@@ -25,9 +25,12 @@ import javax.annotation.Nullable;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 
+import com.phloc.commons.ValueEnforcer;
+import com.phloc.commons.string.ToStringGenerator;
+
 /**
  * A caching class that maps {@link ExcelStyle} objects to {@link CellStyle}.
- * 
+ *
  * @author Philip Helger
  */
 public final class ExcelStyleCache
@@ -43,13 +46,17 @@ public final class ExcelStyleCache
     return m_aMap.get (aExcelStyle);
   }
 
-  public void addCellStyle (@Nonnull final ExcelStyle aExcelStyle, final CellStyle aCellStyle)
+  public void addCellStyle (@Nonnull final ExcelStyle aExcelStyle, @Nonnull final CellStyle aCellStyle)
   {
-    if (aExcelStyle == null)
-      throw new NullPointerException ("excelStyle");
-    if (aCellStyle == null)
-      throw new NullPointerException ("cellStyle");
+    ValueEnforcer.notNull (aExcelStyle, "ExcelStyle");
+    ValueEnforcer.notNull (aCellStyle, "CellStyle");
 
     m_aMap.put (aExcelStyle, aCellStyle);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("map", m_aMap).toString ();
   }
 }

@@ -23,17 +23,19 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Represents a single excel style with enums instead of numeric values.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -230,7 +232,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
   /**
    * Set the index of the font to use. The font must have been previously
    * created via Workbook.createFont()!
-   * 
+   *
    * @param nFontIndex
    *        The font index to use. Values &lt; 0 indicate no font to use
    * @return this
@@ -240,6 +242,21 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
   {
     m_nFontIndex = nFontIndex;
     return this;
+  }
+
+  /**
+   * Set the index of the font to use. The font must have been previously
+   * created via Workbook.createFont()!
+   *
+   * @param aFont
+   *        The font to use. May not be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  public ExcelStyle setFont (@Nonnull final Font aFont)
+  {
+    ValueEnforcer.notNull (aFont, "Font");
+    return setFontIndex (aFont.getIndex ());
   }
 
   @Nonnull
@@ -273,7 +290,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
       aCS.setBorderBottom (m_eBorderBottom.getValue ());
     if (m_eBorderLeft != null)
       aCS.setBorderLeft (m_eBorderLeft.getValue ());
-    if (m_nFontIndex > 0)
+    if (m_nFontIndex >= 0)
       aCS.setFont (aWB.getFontAt (m_nFontIndex));
   }
 

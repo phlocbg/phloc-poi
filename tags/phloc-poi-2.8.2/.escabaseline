@@ -1,0 +1,75 @@
+# Enerjy Software baseline data (files=7, problems=67).
+path: /phloc-poi/src/main/java/com/phloc/poi/POISLF4JLogger.java
+problem: JAVA0057:JAVA0057 Unnecessary default constructor 'POISLF4JLogger'
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0110:JAVA0110 Incorrect javadoc: no @return tag
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+path: /phloc-poi/src/main/java/com/phloc/poi/excel/ExcelFormulaEvaluator.java
+problem: JAVA0118:JAVA0118 Missing javadoc: type 'ExcelFormulaEvaluator'
+problem: JAVA0110:JAVA0110 Incorrect javadoc: no @return tag
+problem: JAVA0110:JAVA0110 Incorrect javadoc: no @return tag
+path: /phloc-poi/src/main/java/com/phloc/poi/excel/ExcelReadUtils.java
+problem: JAVA0018:JAVA0018 Method name '_asNumber' does not have required form: (<uppercase>|<lowercase>)(<uppercase>|<lowercase>|<underscore>|<digit>)*
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0166:JAVA0166 Generic exception 'java.lang.RuntimeException' caught
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0166:JAVA0166 Generic exception 'java.lang.RuntimeException' caught
+path: /phloc-poi/src/main/java/com/phloc/poi/excel/WorkbookCreationHelper.java
+problem: JAVA0136:JAVA0136 24 methods defined in class 'WorkbookCreationHelper' (maximum: 20)
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0035:JAVA0035 Missing braces in for statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+path: /phloc-poi/src/main/java/com/phloc/poi/excel/style/ExcelStyle.java
+problem: JAVA0100:JAVA0100 Class contains 12 non-final fields (maximum: 8)
+problem: JAVA0136:JAVA0136 32 methods defined in class 'ExcelStyle' (maximum: 20)
+problem: JAVA0116:JAVA0116 Missing javadoc: field 'DEFAULT_WRAP_TEXT'
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+path: /phloc-poi/src/main/java/com/phloc/poi/excel/style/ExcelStyleCache.java
+problem: JAVA0057:JAVA0057 Unnecessary default constructor 'ExcelStyleCache'
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+problem: JAVA0034:JAVA0034 Missing braces in if statement
+path: /phloc-poi/src/test/java/com/phloc/poi/excel/ExcelReadUtilsTest.java
+problem: JAVA0018:JAVA0018 Method name '_validateWorkbook' does not have required form: (<uppercase>|<lowercase>)(<uppercase>|<lowercase>|<underscore>|<digit>)*
+problem: JAVA0130:JAVA0130 Non-static method '_validateWorkbook' does not use instance fields
+problem: JAVA0076:JAVA0076 Use of magic number '0.00001'
+problem: JAVA0076:JAVA0076 Use of magic number '6'
+problem: JAVA0076:JAVA0076 Use of magic number '0.00001'
+problem: JAVA0076:JAVA0076 Use of magic number '0.00001'
+problem: JAVA0076:JAVA0076 Use of magic number '4711'
+problem: JAVA0076:JAVA0076 Use of magic number '0.00001'
+problem: JAVA0076:JAVA0076 Use of magic number '4711'
+problem: JAVA0076:JAVA0076 Use of magic number '6'
+problem: JAVA0076:JAVA0076 Use of magic number '4711'
+problem: JAVA0076:JAVA0076 Use of magic number '4711'
+problem: JAVA0076:JAVA0076 Use of magic number '3.14159'
+problem: JAVA0076:JAVA0076 Use of magic number '3.14159'

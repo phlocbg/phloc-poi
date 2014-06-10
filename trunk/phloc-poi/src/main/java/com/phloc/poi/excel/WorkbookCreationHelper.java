@@ -37,6 +37,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +52,7 @@ import com.phloc.poi.excel.style.ExcelStyleCache;
 
 /**
  * A utility class for creating very simple Excel workbooks.
- *
+ * 
  * @author Philip Helger
  */
 public final class WorkbookCreationHelper
@@ -86,7 +89,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Create a new font in the passed workbook.
-   *
+   * 
    * @return The created font.
    */
   @Nonnull
@@ -106,7 +109,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Create a new sheet with an optional name
-   *
+   * 
    * @param sName
    *        The name to be used. May be <code>null</code>.
    * @return The created workbook sheet
@@ -204,6 +207,42 @@ public final class WorkbookCreationHelper
   }
 
   /**
+   * @param aValue
+   *        The value to be set.
+   * @return A new cell in the current row of the current sheet with the passed
+   *         value
+   */
+  @Nonnull
+  public Cell addCell (@Nonnull final LocalDate aValue)
+  {
+    return addCell (aValue.toDate ());
+  }
+
+  /**
+   * @param aValue
+   *        The value to be set.
+   * @return A new cell in the current row of the current sheet with the passed
+   *         value
+   */
+  @Nonnull
+  public Cell addCell (@Nonnull final LocalDateTime aValue)
+  {
+    return addCell (aValue.toDate ());
+  }
+
+  /**
+   * @param aValue
+   *        The value to be set.
+   * @return A new cell in the current row of the current sheet with the passed
+   *         value
+   */
+  @Nonnull
+  public Cell addCell (@Nonnull final DateTime aValue)
+  {
+    return addCell (aValue.toDate ());
+  }
+
+  /**
    * @param dValue
    *        The value to be set.
    * @return A new cell in the current row of the current sheet with the passed
@@ -265,7 +304,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Set the cell style of the last added cell
-   *
+   * 
    * @param aExcelStyle
    *        The style to be set.
    */
@@ -347,7 +386,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Write the current workbook to a file
-   *
+   * 
    * @param sFilename
    *        The file to write to. May not be <code>null</code>.
    * @return {@link ESuccess}
@@ -360,7 +399,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Write the current workbook to a file
-   *
+   * 
    * @param aFile
    *        The file to write to. May not be <code>null</code>.
    * @return {@link ESuccess}
@@ -373,7 +412,7 @@ public final class WorkbookCreationHelper
 
   /**
    * Write the current workbook to an output stream.
-   *
+   * 
    * @param aOS
    *        The output stream to write to. May not be <code>null</code>. Is
    *        automatically closed independent of the success state.

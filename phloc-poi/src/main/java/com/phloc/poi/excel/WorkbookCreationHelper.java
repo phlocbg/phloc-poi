@@ -20,6 +20,8 @@ package com.phloc.poi.excel;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -47,6 +49,7 @@ import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
+import com.phloc.datetime.CPDT;
 import com.phloc.poi.excel.style.ExcelStyle;
 import com.phloc.poi.excel.style.ExcelStyleCache;
 
@@ -57,6 +60,12 @@ import com.phloc.poi.excel.style.ExcelStyleCache;
  */
 public final class WorkbookCreationHelper
 {
+  /** The BigInteger for the largest possible long value */
+  private static final BigInteger BIGINT_MAX_LONG = BigInteger.valueOf (Long.MAX_VALUE);
+
+  /** The BigInteger for the smallest possible long value */
+  private static final BigInteger BIGINT_MIN_LONG = BigInteger.valueOf (Long.MIN_VALUE);
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (WorkbookCreationHelper.class);
 
   private final Workbook m_aWB;
@@ -215,7 +224,7 @@ public final class WorkbookCreationHelper
   @Nonnull
   public Cell addCell (@Nonnull final LocalDate aValue)
   {
-    return addCell (aValue.toDate ());
+    return addCell (aValue.toDateTime (CPDT.NULL_LOCAL_TIME));
   }
 
   /**
@@ -227,7 +236,7 @@ public final class WorkbookCreationHelper
   @Nonnull
   public Cell addCell (@Nonnull final LocalDateTime aValue)
   {
-    return addCell (aValue.toDate ());
+    return addCell (aValue.toDateTime ());
   }
 
   /**
@@ -243,6 +252,22 @@ public final class WorkbookCreationHelper
   }
 
   /**
+   * @param aValue
+   *        The value to be set.
+   * @return A new cell in the current row of the current sheet with the passed
+   *         value
+   */
+  @Nonnull
+  public Cell addCell (@Nonnull final BigInteger aValue)
+  {
+    if (aValue.compareTo (BIGINT_MIN_LONG) >= 0 && aValue.compareTo (BIGINT_MAX_LONG) <= 0)
+      return addCell (aValue.longValue ());
+
+    // Too large - add as string
+    return addCell (aValue.toString ());
+  }
+
+  /**
    * @param dValue
    *        The value to be set.
    * @return A new cell in the current row of the current sheet with the passed
@@ -255,6 +280,26 @@ public final class WorkbookCreationHelper
     aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
     aCell.setCellValue (dValue);
     return aCell;
+  }
+
+  /**
+   * @param aValue
+   *        The value to be set.
+   * @return A new cell in the current row of the current sheet with the passed
+   *         value
+   */
+  @Nonnull
+  public Cell addCell (@Nonnull final BigDecimal aValue)
+  {
+    try
+    {
+      return addCell (aValue.doubleValue ());
+    }
+    catch (final NumberFormatException ex)
+    {
+      // Add as string if too large for a double
+      return addCell (aValue.toString ());
+    }
   }
 
   /**

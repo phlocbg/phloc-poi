@@ -1,4 +1,4 @@
-#phloc-json
+#phloc-poi
 
 Wrapper around Apache POI  
 

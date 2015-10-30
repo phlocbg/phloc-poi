@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2006-2014 phloc systems
+    Copyright (C) 2006-2015 phloc systems
     http://www.phloc.com
     office[at]phloc[dot]com
 
@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.phloc</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>23.2</version>
+    <version>24.0</version>
     <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -31,7 +31,7 @@
   <packaging>bundle</packaging>
   <name>phloc-poi</name>
   <description>Wrapper around Apache POI</description>
-  <url>http://repo.phloc.com/apidocs/phloc-poi/${project.version}</url>
+  <url>https://github.com/phlocbg/phloc-poi/tree/master/phloc-poi</url>
   
   <licenses>
     <license>
@@ -42,12 +42,14 @@
   </licenses>
   
   <scm>
-    <url>http://code.google.com/p/phloc-poi/source/browse/</url>
-    <connection>scm:svn:http://phloc-poi.googlecode.com/svn/trunk/phloc-poi</connection>
-    <developerConnection>scm:svn:https://phloc-poi.googlecode.com/svn/trunk/phloc-poi</developerConnection>
-  </scm>
+    <connection>scm:git:https://github.com/phlocbg/phloc-poi</connection>
+    <developerConnection>scm:git:https://github.com/phlocbg/phloc-poi</developerConnection>
+  <url>http://github.com/phlocbg/phloc-poi</url>
+    <tag>HEAD</tag>
 
-  <organization>
+</scm>
+
+<organization>
     <name>phloc systems</name>
     <url>http://www.phloc.com</url>
   </organization>
@@ -75,7 +77,7 @@
     <dependency>
       <groupId>com.phloc</groupId>
       <artifactId>phloc-datetime</artifactId>
-      <version>3.1.4</version>
+      <version>3.2.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.poi</groupId>

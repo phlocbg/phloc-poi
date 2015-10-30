@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2006-2014 phloc systems
+    Copyright (C) 2006-2015 phloc systems
     http://www.phloc.com
     office[at]phloc[dot]com
 
@@ -20,6 +20,12 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-poi">
+  <release date="2015-10-30" version="2.9.0" />
+  <entry date="2015-10-30" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to phloc-datetime 3.2.0</text>
+    </change>
+  </entry>
   <release date="2014-05-21" version="2.8.2" />
   <entry date="2014-05-21" category="tech" action="change">
     <change>

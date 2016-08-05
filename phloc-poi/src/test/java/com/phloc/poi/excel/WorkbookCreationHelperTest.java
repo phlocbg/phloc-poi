@@ -30,19 +30,28 @@ import org.junit.Test;
 public final class WorkbookCreationHelperTest
 {
   @Test
-  public void testAddCellFormula ()
+  public void testAddCellFormulaUndefined ()
   {
     final WorkbookCreationHelper aWCH = new WorkbookCreationHelper (EExcelVersion.XLSX);
     aWCH.createNewSheet ();
     aWCH.addRow ();
     try
     {
-      aWCH.addCellFormula ("ABC(A1)");
+      aWCH.addCellFormula (")invalid("); //$NON-NLS-1$
       fail ();
     }
     catch (final FormulaParseException ex)
     {
       // expected
     }
+  }
+  
+  @Test
+  public void testAddCellFormulaSyntax ()
+  {
+    final WorkbookCreationHelper aWCH = new WorkbookCreationHelper (EExcelVersion.XLSX);
+    aWCH.createNewSheet ();
+    aWCH.addRow ();
+    aWCH.addCellFormula ("ABC(A1)"); //$NON-NLS-1$
   }
 }

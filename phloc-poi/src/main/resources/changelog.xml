@@ -20,6 +20,12 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-poi">
+  <release date="2016-10-06" version="2.9.2" />
+  <entry date="2016-10-06" category="feature" action="add">
+    <change>
+      <text locale="en">Added new domain object IWorkbookWrapper for wrapping a workbook with meta-data</text>
+    </change>
+  </entry>
   <release date="2016-08-05" version="2.9.1" />
   <entry date="2016-08-05" category="tech" action="update">
     <change>

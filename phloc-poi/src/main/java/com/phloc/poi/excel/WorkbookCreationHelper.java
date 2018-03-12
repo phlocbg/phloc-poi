@@ -88,14 +88,14 @@ public final class WorkbookCreationHelper
   
   public WorkbookCreationHelper (@Nonnull final Workbook aWB)
   {
-    m_aWB = ValueEnforcer.notNull (aWB, "Workbook");
-    m_aCreationHelper = aWB.getCreationHelper ();
+    this.m_aWB = ValueEnforcer.notNull (aWB, "Workbook"); //$NON-NLS-1$
+    this.m_aCreationHelper = aWB.getCreationHelper ();
   }
   
   @Nonnull
   public Workbook getWorkbook ()
   {
-    return m_aWB;
+    return this.m_aWB;
   }
   
   /**
@@ -106,7 +106,7 @@ public final class WorkbookCreationHelper
   @Nonnull
   public Font createFont ()
   {
-    return m_aWB.createFont ();
+    return this.m_aWB.createFont ();
   }
   
   /**
@@ -128,13 +128,13 @@ public final class WorkbookCreationHelper
   @Nonnull
   public Sheet createNewSheet (@Nullable final String sName)
   {
-    m_aLastSheet = sName == null ? m_aWB.createSheet () : m_aWB.createSheet (sName);
-    m_nLastSheetRowIndex = 0;
-    m_aLastRow = null;
-    m_nLastRowCellIndex = 0;
-    m_aLastCell = null;
-    m_nMaxCellIndex = 0;
-    return m_aLastSheet;
+    this.m_aLastSheet = sName == null ? this.m_aWB.createSheet () : this.m_aWB.createSheet (sName);
+    this.m_nLastSheetRowIndex = 0;
+    this.m_aLastRow = null;
+    this.m_nLastRowCellIndex = 0;
+    this.m_aLastCell = null;
+    this.m_nMaxCellIndex = 0;
+    return this.m_aLastSheet;
   }
   
   public void goTo (final Row aRow)
@@ -145,16 +145,16 @@ public final class WorkbookCreationHelper
   
   public void fillDenormatizationValues (final Set <Integer> aColIndexes)
   {
-    Row aMainRow = this.m_aLastRow;
+    final Row aMainRow = this.m_aLastRow;
     // cache last row idx?
-    for (int i = aMainRow.getRowNum (); i < m_aLastSheet.getLastRowNum (); i++)
+    for (int i = aMainRow.getRowNum (); i < this.m_aLastSheet.getLastRowNum (); i++)
     {
-      Row aCurRow = nextRow ();
+      final Row aCurRow = nextRow ();
       if (!ContainerHelper.isEmpty (aColIndexes))
       {
-        for (Integer aColIdx : aColIndexes)
+        for (final Integer aColIdx : aColIndexes)
         {
-          Cell aSourceCell = aMainRow.getCell (aColIdx.intValue ());
+          final Cell aSourceCell = aMainRow.getCell (aColIdx.intValue ());
           copyToRow (aSourceCell, aCurRow);
         }
       }
@@ -162,20 +162,26 @@ public final class WorkbookCreationHelper
     goToLastRow ();
   }
   
-  public Cell copyToRow (Cell aSource, Row aRow)
+  public Cell copyToRow (final Cell aSource, final Row aRow)
   {
-    Cell aCopy = aRow.createCell (aSource.getColumnIndex ());
+    final Cell aCopy = aRow.createCell (aSource.getColumnIndex ());
     apply (aSource, aCopy);
     return aCopy;
   }
   
-  public void apply (Cell aSource, Cell aTarget)
+  @SuppressWarnings ("static-method")
+  public void apply (final Cell aSource, final Cell aTarget)
   {
-    // style
-    CellStyle aStyle = this.m_aWB.createCellStyle ();
-    aStyle.cloneStyleFrom (aSource.getCellStyle ());
-    aTarget.setCellStyle (aStyle);
+    // not cloning the style in order to not create uncached instances (style overflow!)
     
+    // CellStyle aStyle = this.m_aWB.createCellStyle ();
+    // aStyle.cloneStyleFrom (aSource.getCellStyle ());
+    
+    final CellStyle aStyle = aSource.getCellStyle ();
+    if (aStyle != null)
+    {
+      aTarget.setCellStyle (aStyle);
+    }
     // If there is a cell comment, copy
     if (aSource.getCellComment () != null)
     {
@@ -228,15 +234,15 @@ public final class WorkbookCreationHelper
   @Nonnull
   public Row nextRow ()
   {
-    Row aNext = m_aLastSheet.getRow (m_nLastSheetRowIndex);
+    final Row aNext = this.m_aLastSheet.getRow (this.m_nLastSheetRowIndex);
     if (aNext == null)
     {
       return addRow ();
     }
-    m_aLastRow = aNext;
-    m_nLastSheetRowIndex++;
+    this.m_aLastRow = aNext;
+    this.m_nLastSheetRowIndex++;
     goToLastCell ();
-    return m_aLastRow;
+    return this.m_aLastRow;
   }
   
   /**
@@ -246,10 +252,10 @@ public final class WorkbookCreationHelper
   @Nullable
   public Row goToLastRow ()
   {
-    m_aLastRow = m_aLastSheet.getRow (m_aLastSheet.getLastRowNum ());
-    m_nLastSheetRowIndex = m_aLastRow == null ? 0 : m_aLastRow.getRowNum () + 1;
+    this.m_aLastRow = this.m_aLastSheet.getRow (this.m_aLastSheet.getLastRowNum ());
+    this.m_nLastSheetRowIndex = this.m_aLastRow == null ? 0 : this.m_aLastRow.getRowNum () + 1;
     goToLastCell ();
-    return m_aLastRow;
+    return this.m_aLastRow;
   }
   
   /**
@@ -259,22 +265,22 @@ public final class WorkbookCreationHelper
   @Nullable
   public Cell goToLastCell ()
   {
-    if (m_aLastRow == null)
+    if (this.m_aLastRow == null)
     {
-      m_nLastRowCellIndex = 0;
-      m_aLastCell = null;
+      this.m_nLastRowCellIndex = 0;
+      this.m_aLastCell = null;
     }
     else
     {
       // getLastCellNum returns index + 1 or -1
-      m_nLastRowCellIndex = m_aLastRow.getLastCellNum () - 1;
-      if (m_nLastRowCellIndex < 0)
+      this.m_nLastRowCellIndex = this.m_aLastRow.getLastCellNum () - 1;
+      if (this.m_nLastRowCellIndex < 0)
       {
-        m_nLastRowCellIndex = 0;
+        this.m_nLastRowCellIndex = 0;
       }
-      m_aLastCell = m_aLastRow.getCell (m_nLastRowCellIndex);
+      this.m_aLastCell = this.m_aLastRow.getCell (this.m_nLastRowCellIndex);
     }
-    return m_aLastCell;
+    return this.m_aLastCell;
   }
   
   /**
@@ -283,10 +289,10 @@ public final class WorkbookCreationHelper
   @Nonnull
   public Row addRow ()
   {
-    m_aLastRow = m_aLastSheet.createRow (m_nLastSheetRowIndex++);
-    m_nLastRowCellIndex = 0;
-    m_aLastCell = null;
-    return m_aLastRow;
+    this.m_aLastRow = this.m_aLastSheet.createRow (this.m_nLastSheetRowIndex++);
+    this.m_nLastRowCellIndex = 0;
+    this.m_aLastCell = null;
+    return this.m_aLastRow;
   }
   
   /**
@@ -295,7 +301,7 @@ public final class WorkbookCreationHelper
   @Nonnegative
   public int getRowCount ()
   {
-    return m_nLastSheetRowIndex;
+    return this.m_nLastSheetRowIndex;
   }
   
   /**
@@ -311,18 +317,20 @@ public final class WorkbookCreationHelper
    * @return A new cell in the current row of the current sheet
    */
   @Nonnull
-  public Cell addCell (@Nullable ExcelStyle aStyle)
+  public Cell addCell (@Nullable final ExcelStyle aStyle)
   {
-    m_aLastCell = m_aLastRow.createCell (m_nLastRowCellIndex++);
+    this.m_aLastCell = this.m_aLastRow.createCell (this.m_nLastRowCellIndex++);
     
     // Check for the maximum cell index in this sheet
-    if (m_nLastRowCellIndex > m_nMaxCellIndex)
-      m_nMaxCellIndex = m_nLastRowCellIndex;
+    if (this.m_nLastRowCellIndex > this.m_nMaxCellIndex)
+    {
+      this.m_nMaxCellIndex = this.m_nLastRowCellIndex;
+    }
     if (aStyle != null)
     {
       addCellStyle (aStyle);
     }
-    return m_aLastCell;
+    return this.m_aLastCell;
   }
   
   /**
@@ -337,7 +345,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (final boolean bValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (final boolean bValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
     aCell.setCellType (Cell.CELL_TYPE_BOOLEAN);
@@ -357,7 +365,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (final Calendar aValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (final Calendar aValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
     aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
@@ -377,7 +385,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (final Date aValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (final Date aValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
     aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
@@ -397,7 +405,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (@Nonnull final LocalDate aValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (@Nonnull final LocalDate aValue, @Nullable final ExcelStyle aStyle)
   {
     return addCell (aValue.toDateTime (CPDT.NULL_LOCAL_TIME), aStyle);
   }
@@ -414,7 +422,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (@Nonnull final LocalDateTime aValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (@Nonnull final LocalDateTime aValue, @Nullable final ExcelStyle aStyle)
   {
     return addCell (aValue.toDateTime (), aStyle);
   }
@@ -431,7 +439,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (@Nonnull final DateTime aValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (@Nonnull final DateTime aValue, @Nullable final ExcelStyle aStyle)
   {
     return addCell (aValue.toDate (), aStyle);
   }
@@ -444,14 +452,16 @@ public final class WorkbookCreationHelper
   @Nonnull
   public Cell addCell (@Nonnull final BigInteger aValue)
   {
-      return addCell (aValue, null);
+    return addCell (aValue, null);
   }
   
   @Nonnull
-  public Cell addCell (@Nonnull final BigInteger aValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (@Nonnull final BigInteger aValue, @Nullable final ExcelStyle aStyle)
   {
     if (aValue.compareTo (BIGINT_MIN_LONG) >= 0 && aValue.compareTo (BIGINT_MAX_LONG) <= 0)
+    {
       return addCell (aValue.longValue (), aStyle);
+    }
     
     // Too large - add as string
     return addCell (aValue.toString (), aStyle);
@@ -469,7 +479,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (final double dValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (final double dValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
     aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
@@ -489,7 +499,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (@Nonnull final BigDecimal aValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (@Nonnull final BigDecimal aValue, @Nullable final ExcelStyle aStyle)
   {
     try
     {
@@ -514,7 +524,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (final RichTextString aValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (final RichTextString aValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
     aCell.setCellType (Cell.CELL_TYPE_STRING);
@@ -534,7 +544,7 @@ public final class WorkbookCreationHelper
   }
   
   @Nonnull
-  public Cell addCell (final String sValue, @Nullable ExcelStyle aStyle)
+  public Cell addCell (final String sValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
     aCell.setCellType (Cell.CELL_TYPE_STRING);
@@ -564,19 +574,26 @@ public final class WorkbookCreationHelper
    */
   public void addCellStyle (@Nonnull final ExcelStyle aExcelStyle)
   {
-    ValueEnforcer.notNull (aExcelStyle, "ExcelStyle");
-    if (m_aLastCell == null)
-      throw new IllegalStateException ("No cell present for current row!");
-    
-    CellStyle aCellStyle = m_aStyleCache.getCellStyle (aExcelStyle);
+    ValueEnforcer.notNull (aExcelStyle, "ExcelStyle"); //$NON-NLS-1$
+    if (this.m_aLastCell == null)
+    {
+      throw new IllegalStateException ("No cell present for current row!"); //$NON-NLS-1$
+    }
+    this.m_aLastCell.setCellStyle (getOrCreateCellStyle (aExcelStyle));
+  }
+  
+  public CellStyle getOrCreateCellStyle (@Nonnull final ExcelStyle aExcelStyle)
+  {
+    ValueEnforcer.notNull (aExcelStyle, "ExcelStyle"); //$NON-NLS-1$
+    CellStyle aCellStyle = this.m_aStyleCache.getCellStyle (aExcelStyle);
     if (aCellStyle == null)
     {
-      aCellStyle = m_aWB.createCellStyle ();
-      aExcelStyle.fillCellStyle (m_aWB, aCellStyle, m_aCreationHelper);
-      m_aStyleCache.addCellStyle (aExcelStyle, aCellStyle);
-      m_nCreatedCellStyles++;
+      aCellStyle = this.m_aWB.createCellStyle ();
+      aExcelStyle.fillCellStyle (this.m_aWB, aCellStyle, this.m_aCreationHelper);
+      this.m_aStyleCache.addCellStyle (aExcelStyle, aCellStyle);
+      this.m_nCreatedCellStyles++;
     }
-    m_aLastCell.setCellStyle (aCellStyle);
+    return aCellStyle;
   }
   
   /**
@@ -585,12 +602,12 @@ public final class WorkbookCreationHelper
   @Nonnegative
   public int getCellCountInRow ()
   {
-    return m_nLastRowCellIndex;
+    return this.m_nLastRowCellIndex;
   }
   
   public void setLastRowCellIndex (@Nonnegative final int nIndex)
   {
-    m_nLastRowCellIndex = nIndex;
+    this.m_nLastRowCellIndex = nIndex;
   }
   
   /**
@@ -599,7 +616,7 @@ public final class WorkbookCreationHelper
   @Nonnegative
   public int getMaximumCellCountInRowInSheet ()
   {
-    return m_nMaxCellIndex;
+    return this.m_nMaxCellIndex;
   }
   
   /**
@@ -608,16 +625,18 @@ public final class WorkbookCreationHelper
   public void autoSizeAllColumns ()
   {
     // auto-adjust all columns (except description and image description)
-    for (short nCol = 0; nCol < m_nMaxCellIndex; ++nCol)
+    for (short nCol = 0; nCol < this.m_nMaxCellIndex; ++nCol)
+    {
       try
       {
-        m_aLastSheet.autoSizeColumn (nCol);
+        this.m_aLastSheet.autoSizeColumn (nCol);
       }
       catch (final IllegalArgumentException ex)
       {
         // Happens if a column is too large
-        LOG.warn ("Failed to resize column " + nCol + ": column too wide!");
+        LOG.warn ("Failed to resize column " + nCol + ": column too wide!"); //$NON-NLS-1$ //$NON-NLS-2$
       }
+    }
   }
   
   /**
@@ -638,10 +657,10 @@ public final class WorkbookCreationHelper
     // Set auto filter on all columns
     // Use the specified row (param1, param2)
     // From first column to last column (param3, param4)
-    m_aLastSheet.setAutoFilter (new CellRangeAddress (nRowIndex,
-                                                      nRowIndex,
-                                                      0,
-                                                      m_nMaxCellIndex - 1));
+    this.m_aLastSheet.setAutoFilter (new CellRangeAddress (nRowIndex,
+                                                           nRowIndex,
+                                                           0,
+                                                           this.m_nMaxCellIndex - 1));
   }
   
   /**
@@ -681,22 +700,26 @@ public final class WorkbookCreationHelper
   @Nonnull
   public ESuccess write (@Nonnull @WillClose final OutputStream aOS)
   {
-    ValueEnforcer.notNull (aOS, "OutputStream");
+    ValueEnforcer.notNull (aOS, "OutputStream"); //$NON-NLS-1$
     
     try
     {
-      if (m_nCreatedCellStyles > 0 && LOG.isDebugEnabled ())
-        LOG.debug ("Writing Excel workbook with " +
-                   m_nCreatedCellStyles +
-                   " different cell styles");
+      if (this.m_nCreatedCellStyles > 0 && LOG.isDebugEnabled ())
+      {
+        LOG.debug ("Writing Excel workbook with " + //$NON-NLS-1$
+                   this.m_nCreatedCellStyles +
+                   " different cell styles"); //$NON-NLS-1$
+      }
       
-      m_aWB.write (aOS);
+      this.m_aWB.write (aOS);
       return ESuccess.SUCCESS;
     }
     catch (final IOException ex)
     {
       if (!StreamUtils.isKnownEOFException (ex))
-        LOG.error ("Failed to write Excel workbook to output stream " + aOS, ex);
+      {
+        LOG.error ("Failed to write Excel workbook to output stream " + aOS, ex); //$NON-NLS-1$
+      }
       return ESuccess.FAILURE;
     }
     finally

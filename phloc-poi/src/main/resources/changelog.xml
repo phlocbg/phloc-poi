@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-poi">
+  <entry date="2018-03-12" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed so applying a style from one to the other cell will not create an additional style instance to avoid style element overflow</text>
+    </change>
+  </entry>
   <release date="2017-05-31" version="2.9.3" />
   <entry date="2017-05-31" category="feature" action="add">
     <change>

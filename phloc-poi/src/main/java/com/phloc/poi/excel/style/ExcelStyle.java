@@ -55,7 +55,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
   private EExcelBorder m_eBorderRight;
   private EExcelBorder m_eBorderBottom;
   private EExcelBorder m_eBorderLeft;
-  private short m_nFontIndex = -1;
+  private int m_nFontIndex = -1;
 
   public ExcelStyle ()
   {}
@@ -224,7 +224,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
     return setBorderTop (eBorder).setBorderRight (eBorder).setBorderBottom (eBorder).setBorderLeft (eBorder);
   }
 
-  public short getFontIndex ()
+  public int getFontIndex ()
   {
     return m_nFontIndex;
   }
@@ -238,7 +238,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
    * @return this
    */
   @Nonnull
-  public ExcelStyle setFontIndex (final short nFontIndex)
+  public ExcelStyle setFontIndex (final int nFontIndex)
   {
     m_nFontIndex = nFontIndex;
     return this;
@@ -256,7 +256,7 @@ public final class ExcelStyle implements ICloneable <ExcelStyle>
   public ExcelStyle setFont (@Nonnull final Font aFont)
   {
     ValueEnforcer.notNull (aFont, "Font");
-    return setFontIndex (aFont.getIndex ());
+    return setFontIndex (aFont.getIndexAsInt ());
   }
 
   @Nonnull

@@ -34,7 +34,7 @@ public final class EExcelPatternTest
   {
     for (final EExcelPattern ePattern : EExcelPattern.values ())
     {
-      assertTrue (ePattern.getValue () >= 0);
+      assertTrue (ePattern.getValue () != null);
       assertSame (ePattern, EExcelPattern.valueOf (ePattern.name ()));
     }
   }

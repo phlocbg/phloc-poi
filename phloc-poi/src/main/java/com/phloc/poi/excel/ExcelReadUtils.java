@@ -25,10 +25,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import org.apache.poi.POIXMLException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ooxml.POIXMLException;
 import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Hyperlink;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -143,32 +144,35 @@ public final class ExcelReadUtils
     if (aCell == null)
       return null;
 
-    final int nCellType = aCell.getCellType ();
-    switch (nCellType)
+    final CellType eCellType = aCell.getCellType ();
+    switch (eCellType)
     {
-      case Cell.CELL_TYPE_NUMERIC:
+      case NUMERIC:
         return _getAsNumberObject (aCell.getNumericCellValue ());
-      case Cell.CELL_TYPE_STRING:
+      case STRING:
         return aCell.getStringCellValue ();
-      case Cell.CELL_TYPE_BOOLEAN:
+      case BOOLEAN:
         return Boolean.valueOf (aCell.getBooleanCellValue ());
-      case Cell.CELL_TYPE_FORMULA:
-        final int nFormulaResultType = aCell.getCachedFormulaResultType ();
-        switch (nFormulaResultType)
+      case FORMULA:
+        final CellType eFormulaResultType = aCell.getCachedFormulaResultType ();
+        switch (eFormulaResultType)
         {
-          case Cell.CELL_TYPE_NUMERIC:
+          case NUMERIC:
             return _getAsNumberObject (aCell.getNumericCellValue ());
-          case Cell.CELL_TYPE_STRING:
+          case STRING:
             return aCell.getStringCellValue ();
-          case Cell.CELL_TYPE_BOOLEAN:
+          case BOOLEAN:
             return Boolean.valueOf (aCell.getBooleanCellValue ());
           default:
-            throw new IllegalArgumentException ("The cell formula type " + nFormulaResultType + " is unsupported!");
+            throw new IllegalArgumentException ("The cell formula type " + eFormulaResultType + " is unsupported!");
         }
-      case Cell.CELL_TYPE_BLANK:
+      case BLANK:
         return null;
+      case ERROR:
+    	  s_aLogger.warn("Ignoring cell content of type formula error (not supported)");
+          return null;
       default:
-        throw new IllegalArgumentException ("The cell type " + nCellType + " is unsupported!");
+        throw new IllegalArgumentException ("The cell type " + eCellType + " is unsupported!");
     }
   }
 
@@ -270,7 +274,7 @@ public final class ExcelReadUtils
   {
     if (aCell == null)
       return false;
-    final int nType = aCell.getCellType ();
-    return nType == Cell.CELL_TYPE_BLANK || nType == Cell.CELL_TYPE_NUMERIC || nType == Cell.CELL_TYPE_FORMULA;
+    final CellType eType = aCell.getCellType ();
+    return eType == CellType.BLANK || eType == CellType.NUMERIC || eType == CellType.FORMULA;
   }
 }

@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 
 import org.apache.poi.ss.formula.IStabilityClassifier;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.RichTextString;
@@ -63,70 +64,70 @@ public final class ExcelReadUtilsTest
 
     Cell aCell = aSheet1.getRow (0).getCell (0);
     assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
+    assertEquals (CellType.STRING, aCell.getCellType ());
     assertEquals ("A1", aCell.getStringCellValue ());
 
     aCell = aSheet1.getRow (1).getCell (1);
     assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
+    assertEquals (CellType.STRING, aCell.getCellType ());
     assertEquals ("B2", aCell.getStringCellValue ());
 
     aCell = aSheet1.getRow (2).getCell (2);
     assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_STRING, aCell.getCellType ());
+    assertEquals (CellType.STRING, aCell.getCellType ());
     assertEquals ("C\n3", aCell.getStringCellValue ());
 
     aCell = aSheet1.getRow (3).getCell (3);
     assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_NUMERIC, aCell.getCellType ());
+    assertEquals (CellType.NUMERIC, aCell.getCellType ());
     assertEquals (0.00001, 4.4, aCell.getNumericCellValue ());
 
     for (int i = 0; i < 6; ++i)
     {
       aCell = aSheet3.getRow (i).getCell (i);
       assertNotNull (aCell);
-      assertEquals (Cell.CELL_TYPE_NUMERIC, aCell.getCellType ());
+      assertEquals (CellType.NUMERIC, aCell.getCellType ());
       assertEquals (0.00001, i + 1, aCell.getNumericCellValue ());
     }
 
     // ="abc"
     aCell = aSheet1.getRow (4).getCell (0);
     assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_FORMULA, aCell.getCellType ());
+    assertEquals (CellType.FORMULA, aCell.getCellType ());
     assertEquals ("\"abc\"", aCell.getCellFormula ());
     assertEquals ("abc", aCell.getStringCellValue ());
     CellValue aEvaluated = new ExcelFormulaEvaluator (aWB, IStabilityClassifier.TOTALLY_IMMUTABLE).evaluate (aCell);
-    assertEquals (Cell.CELL_TYPE_STRING, aEvaluated.getCellType ());
+    assertEquals (CellType.STRING, aEvaluated.getCellType ());
     assertEquals ("abc", aEvaluated.getStringValue ());
 
     // =4711
     aCell = aSheet1.getRow (5).getCell (1);
     assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_FORMULA, aCell.getCellType ());
+    assertEquals (CellType.FORMULA, aCell.getCellType ());
     assertEquals ("4711", aCell.getCellFormula ());
     assertEquals (0.00001, 4711, aCell.getNumericCellValue ());
     aEvaluated = new ExcelFormulaEvaluator (aWB, IStabilityClassifier.TOTALLY_IMMUTABLE).evaluate (aCell);
-    assertEquals (Cell.CELL_TYPE_NUMERIC, aEvaluated.getCellType ());
+    assertEquals (CellType.NUMERIC, aEvaluated.getCellType ());
     assertEquals (0.00001, 4711, aEvaluated.getNumberValue ());
 
     // =TRUE
     aCell = aSheet1.getRow (6).getCell (2);
     assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_FORMULA, aCell.getCellType ());
+    assertEquals (CellType.FORMULA, aCell.getCellType ());
     assertEquals ("TRUE", aCell.getCellFormula ());
     assertTrue (aCell.getBooleanCellValue ());
     aEvaluated = new ExcelFormulaEvaluator (aWB, IStabilityClassifier.TOTALLY_IMMUTABLE).evaluate (aCell);
-    assertEquals (Cell.CELL_TYPE_BOOLEAN, aEvaluated.getCellType ());
+    assertEquals (CellType.BOOLEAN, aEvaluated.getCellType ());
     assertTrue (aEvaluated.getBooleanValue ());
 
     // Refers to cell at 6/2
     aCell = aSheet1.getRow (7).getCell (3);
     assertNotNull (aCell);
-    assertEquals (Cell.CELL_TYPE_FORMULA, aCell.getCellType ());
+    assertEquals (CellType.FORMULA, aCell.getCellType ());
     assertEquals ("C7", aCell.getCellFormula ());
     assertTrue (aCell.getBooleanCellValue ());
     aEvaluated = new ExcelFormulaEvaluator (aWB, IStabilityClassifier.TOTALLY_IMMUTABLE).evaluate (aCell);
-    assertEquals (Cell.CELL_TYPE_BOOLEAN, aEvaluated.getCellType ());
+    assertEquals (CellType.BOOLEAN, aEvaluated.getCellType ());
     assertTrue (aEvaluated.getBooleanValue ());
   }
 
@@ -175,8 +176,8 @@ public final class ExcelReadUtilsTest
       assertEquals (Long.valueOf (Long.MAX_VALUE), ExcelReadUtils.getCellValueObject (aCell));
 
       // double
-      aCell.setCellValue (3.14159);
-      assertEquals (Double.valueOf (3.14159), ExcelReadUtils.getCellValueObject (aCell));
+      aCell.setCellValue (4.14159);
+      assertEquals (Double.valueOf (4.14159), ExcelReadUtils.getCellValueObject (aCell));
 
       // String
       aCell.setCellValue ("Anyhow");

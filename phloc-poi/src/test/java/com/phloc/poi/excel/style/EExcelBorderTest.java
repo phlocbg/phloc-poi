@@ -34,7 +34,7 @@ public final class EExcelBorderTest
   {
     for (final EExcelBorder eBorder : EExcelBorder.values ())
     {
-      assertTrue (eBorder.getValue () >= 0);
+      assertTrue (eBorder.getValue () != null);
       assertSame (eBorder, EExcelBorder.valueOf (eBorder.name ()));
     }
   }

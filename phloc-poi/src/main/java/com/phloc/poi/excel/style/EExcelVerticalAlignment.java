@@ -17,29 +17,29 @@
  */
 package com.phloc.poi.excel.style;
 
-import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 /**
  * Excel vertical alignment enum.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
  */
 public enum EExcelVerticalAlignment
 {
-  VERTICAL_TOP (CellStyle.VERTICAL_TOP),
-  VERTICAL_CENTER (CellStyle.VERTICAL_CENTER),
-  VERTICAL_BOTTOM (CellStyle.VERTICAL_BOTTOM),
-  VERTICAL_JUSTIFY (CellStyle.VERTICAL_JUSTIFY);
+  VERTICAL_TOP (VerticalAlignment.TOP),
+  VERTICAL_CENTER (VerticalAlignment.CENTER),
+  VERTICAL_BOTTOM (VerticalAlignment.BOTTOM),
+  VERTICAL_JUSTIFY (VerticalAlignment.JUSTIFY);
 
-  private final short m_nValue;
+  private final VerticalAlignment m_eValue;
 
-  private EExcelVerticalAlignment (final short nValue)
+  private EExcelVerticalAlignment (final VerticalAlignment eValue)
   {
-    m_nValue = nValue;
+    m_eValue = eValue;
   }
 
-  public short getValue ()
+  public VerticalAlignment getValue ()
   {
-    return m_nValue;
+    return m_eValue;
   }
 }

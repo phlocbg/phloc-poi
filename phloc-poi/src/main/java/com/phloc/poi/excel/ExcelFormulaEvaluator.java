@@ -24,6 +24,7 @@ import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.formula.IStabilityClassifier;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -80,9 +81,9 @@ public class ExcelFormulaEvaluator
    * @param aCell
    *        The cell to evaluate
    * @return The type of the formula result (the cell's type remains as
-   *         Cell.CELL_TYPE_FORMULA however)
+   *         {@link CellType#FORMULA} however)
    */
-  public int evaluateFormulaCell (@Nonnull final Cell aCell)
+  public CellType evaluateFormulaCell (@Nonnull final Cell aCell)
   {
     return m_aEvaluator.evaluateFormulaCell (aCell);
   }

@@ -34,7 +34,7 @@ public final class EExcelAlignmentTest
   {
     for (final EExcelAlignment eAlign : EExcelAlignment.values ())
     {
-      assertTrue (eAlign.getValue () >= 0);
+      assertTrue (eAlign.getValue () != null);
       assertSame (eAlign, EExcelAlignment.valueOf (eAlign.name ()));
     }
   }

@@ -17,32 +17,32 @@
  */
 package com.phloc.poi.excel.style;
 
-import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 /**
  * Excel horizontal alignment enum.
  * 
- * @author Philip Helger
+ * @author Boris Gregorcic
  */
 public enum EExcelAlignment
 {
-  ALIGN_GENERAL (CellStyle.ALIGN_GENERAL),
-  ALIGN_LEFT (CellStyle.ALIGN_LEFT),
-  ALIGN_CENTER (CellStyle.ALIGN_CENTER),
-  ALIGN_RIGHT (CellStyle.ALIGN_RIGHT),
-  ALIGN_FILL (CellStyle.ALIGN_FILL),
-  ALIGN_JUSTIFY (CellStyle.ALIGN_JUSTIFY),
-  ALIGN_CENTER_SELECTION (CellStyle.ALIGN_CENTER_SELECTION);
+  ALIGN_GENERAL (HorizontalAlignment.GENERAL),
+  ALIGN_LEFT (HorizontalAlignment.LEFT),
+  ALIGN_CENTER (HorizontalAlignment.CENTER),
+  ALIGN_RIGHT (HorizontalAlignment.RIGHT),
+  ALIGN_FILL (HorizontalAlignment.FILL),
+  ALIGN_JUSTIFY (HorizontalAlignment.JUSTIFY),
+  ALIGN_CENTER_SELECTION (HorizontalAlignment.CENTER_SELECTION);
 
-  private final short m_nValue;
+  private final HorizontalAlignment m_eValue;
 
-  private EExcelAlignment (final short nValue)
+  private EExcelAlignment (final HorizontalAlignment eValue)
   {
-    m_nValue = nValue;
+	  m_eValue = eValue;
   }
 
-  public short getValue ()
+  public HorizontalAlignment getValue ()
   {
-    return m_nValue;
+    return m_eValue;
   }
 }

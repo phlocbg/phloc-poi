@@ -57,9 +57,9 @@ public class POISLF4JLogger extends SystemOutLogger
    *        The object to log.
    */
   @Override
-  public void log (final int nLevel, final Object aObj)
+  public void _log (final int nLevel, final Object aObj)
   {
-    log (nLevel, aObj, null);
+    _log (nLevel, aObj, null);
   }
 
   /**
@@ -73,7 +73,7 @@ public class POISLF4JLogger extends SystemOutLogger
    *        An exception to be logged
    */
   @Override
-  public void log (final int nLevel, @Nonnull final Object aMsg, @Nullable final Throwable aThrowable)
+  public void _log (final int nLevel, @Nonnull final Object aMsg, @Nullable final Throwable aThrowable)
   {
     if (nLevel == FATAL || nLevel == ERROR)
     {

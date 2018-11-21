@@ -33,6 +33,7 @@ import javax.annotation.WillClose;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.RichTextString;
@@ -200,24 +201,27 @@ public final class WorkbookCreationHelper
     // Set the cell data value
     switch (aSource.getCellType ())
     {
-      case Cell.CELL_TYPE_BLANK:
+      case BLANK:
         aTarget.setCellValue (aSource.getStringCellValue ());
         break;
-      case Cell.CELL_TYPE_BOOLEAN:
+      case BOOLEAN:
         aTarget.setCellValue (aSource.getBooleanCellValue ());
         break;
-      case Cell.CELL_TYPE_ERROR:
+      case ERROR:
         aTarget.setCellErrorValue (aSource.getErrorCellValue ());
         break;
-      case Cell.CELL_TYPE_FORMULA:
+      case FORMULA:
         aTarget.setCellFormula (aSource.getCellFormula ());
         break;
-      case Cell.CELL_TYPE_NUMERIC:
+      case NUMERIC:
         aTarget.setCellValue (aSource.getNumericCellValue ());
         break;
-      case Cell.CELL_TYPE_STRING:
+      case STRING:
         aTarget.setCellValue (aSource.getRichStringCellValue ());
         break;
+      case _NONE:
+    	  // not handled, POI internal only
+          break;
     }
   }
   
@@ -348,7 +352,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final boolean bValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (Cell.CELL_TYPE_BOOLEAN);
+    aCell.setCellType (CellType.BOOLEAN);
     aCell.setCellValue (bValue);
     return aCell;
   }
@@ -368,7 +372,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final Calendar aValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
+    aCell.setCellType (CellType.NUMERIC);
     aCell.setCellValue (aValue);
     return aCell;
   }
@@ -388,7 +392,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final Date aValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
+    aCell.setCellType (CellType.NUMERIC);
     aCell.setCellValue (aValue);
     return aCell;
   }
@@ -482,7 +486,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final double dValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (Cell.CELL_TYPE_NUMERIC);
+    aCell.setCellType (CellType.NUMERIC);
     aCell.setCellValue (dValue);
     return aCell;
   }
@@ -527,7 +531,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final RichTextString aValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (Cell.CELL_TYPE_STRING);
+    aCell.setCellType (CellType.STRING);
     aCell.setCellValue (aValue);
     return aCell;
   }
@@ -547,7 +551,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (final String sValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (Cell.CELL_TYPE_STRING);
+    aCell.setCellType (CellType.STRING);
     aCell.setCellValue (sValue);
     return aCell;
   }
@@ -561,7 +565,7 @@ public final class WorkbookCreationHelper
   public Cell addCellFormula (@Nullable final String sFormula)
   {
     final Cell aCell = addCell ();
-    aCell.setCellType (Cell.CELL_TYPE_FORMULA);
+    aCell.setCellType (CellType.FORMULA);
     aCell.setCellFormula (sFormula);
     return aCell;
   }

@@ -108,6 +108,15 @@ public final class WorkbookCreationHelperTest
                          aCell.getRichStringCellValue ().getString ());
   }
 
+  @Test
+  public void testRichTextNull ()
+  {
+    final WorkbookCreationHelper aWBC = new WorkbookCreationHelper (EExcelVersion.XLSX);
+    aWBC.createNewSheet ();
+    aWBC.addRow ();
+    aWBC.addCell (new XSSFRichTextString ());
+  }
+
   private static XSSFRichTextString createRichText (final String sString,
                                                     final WorkbookCreationHelper aWBC)
   {

@@ -69,12 +69,12 @@ public final class WorkbookCreationHelper
 {
   /** The BigInteger for the largest possible long value */
   private static final BigInteger BIGINT_MAX_LONG = BigInteger.valueOf (Long.MAX_VALUE);
-
+  
   /** The BigInteger for the smallest possible long value */
   private static final BigInteger BIGINT_MIN_LONG = BigInteger.valueOf (Long.MIN_VALUE);
-
+  
   private static final Logger LOG = LoggerFactory.getLogger (WorkbookCreationHelper.class);
-
+  
   private final Workbook m_aWB;
   private final CreationHelper m_aCreationHelper;
   private final ExcelStyleCache m_aStyleCache = new ExcelStyleCache ();
@@ -85,24 +85,24 @@ public final class WorkbookCreationHelper
   private Cell m_aLastCell;
   private int m_nMaxCellIndex = 0;
   private int m_nCreatedCellStyles = 0;
-
+  
   public WorkbookCreationHelper (@Nonnull final EExcelVersion eVersion)
   {
     this (eVersion.createWorkbook ());
   }
-
+  
   public WorkbookCreationHelper (@Nonnull final Workbook aWB)
   {
     this.m_aWB = ValueEnforcer.notNull (aWB, "Workbook"); //$NON-NLS-1$
     this.m_aCreationHelper = aWB.getCreationHelper ();
   }
-
+  
   @Nonnull
   public Workbook getWorkbook ()
   {
     return this.m_aWB;
   }
-
+  
   /**
    * Create a new font in the passed workbook.
    *
@@ -113,7 +113,7 @@ public final class WorkbookCreationHelper
   {
     return this.m_aWB.createFont ();
   }
-
+  
   /**
    * @return A new sheet with a default name
    */
@@ -122,7 +122,7 @@ public final class WorkbookCreationHelper
   {
     return createNewSheet (null);
   }
-
+  
   /**
    * Create a new sheet with an optional name
    *
@@ -141,13 +141,13 @@ public final class WorkbookCreationHelper
     this.m_nMaxCellIndex = 0;
     return this.m_aLastSheet;
   }
-
+  
   public void goTo (final Row aRow)
   {
     this.m_aLastRow = aRow;
     this.m_nLastSheetRowIndex = this.m_aLastRow.getRowNum () + 1;
   }
-
+  
   public void fillDenormatizationValues (final Set <Integer> aColIndexes)
   {
     final Row aMainRow = this.m_aLastRow;
@@ -166,22 +166,22 @@ public final class WorkbookCreationHelper
     }
     goToLastRow ();
   }
-
+  
   public Cell copyToRow (final Cell aSource, final Row aRow)
   {
     final Cell aCopy = aRow.createCell (aSource.getColumnIndex ());
     apply (aSource, aCopy);
     return aCopy;
   }
-
+  
   @SuppressWarnings ("static-method")
   public void apply (final Cell aSource, final Cell aTarget)
   {
     // not cloning the style in order to not create uncached instances (style overflow!)
-
+    
     // CellStyle aStyle = this.m_aWB.createCellStyle ();
     // aStyle.cloneStyleFrom (aSource.getCellStyle ());
-
+    
     final CellStyle aStyle = aSource.getCellStyle ();
     if (aStyle != null)
     {
@@ -192,16 +192,16 @@ public final class WorkbookCreationHelper
     {
       aTarget.setCellComment (aSource.getCellComment ());
     }
-
+    
     // If there is a cell hyperlink, copy
     if (aSource.getHyperlink () != null)
     {
       aTarget.setHyperlink (aSource.getHyperlink ());
     }
-
+    
     // Set the cell data type
     aTarget.setCellType (aSource.getCellType ());
-
+    
     // Set the cell data value
     switch (aSource.getCellType ())
     {
@@ -228,13 +228,13 @@ public final class WorkbookCreationHelper
         break;
     }
   }
-
+  
   public void goTo (final Cell aCell)
   {
     goTo (aCell.getRow ());
     this.m_aLastCell = aCell;
   }
-
+  
   /**
    * @return Creates a new row in this sheet if not yet existing after the current one, or returns
    *         the existing next row
@@ -252,7 +252,7 @@ public final class WorkbookCreationHelper
     goToLastCell ();
     return this.m_aLastRow;
   }
-
+  
   /**
    * @return Creates a new row in this sheet if not yet existing after the current one, or returns
    *         the existing next row
@@ -265,7 +265,7 @@ public final class WorkbookCreationHelper
     goToLastCell ();
     return this.m_aLastRow;
   }
-
+  
   /**
    * @return Creates a new row in this sheet if not yet existing after the current one, or returns
    *         the existing next row
@@ -290,7 +290,7 @@ public final class WorkbookCreationHelper
     }
     return this.m_aLastCell;
   }
-
+  
   /**
    * @return A new row in the current sheet.
    */
@@ -302,7 +302,7 @@ public final class WorkbookCreationHelper
     this.m_aLastCell = null;
     return this.m_aLastRow;
   }
-
+  
   /**
    * @return The number of rows in the current sheet, 0-based.
    */
@@ -311,7 +311,7 @@ public final class WorkbookCreationHelper
   {
     return this.m_nLastSheetRowIndex;
   }
-
+  
   /**
    * @return A new cell in the current row of the current sheet
    */
@@ -320,7 +320,7 @@ public final class WorkbookCreationHelper
   {
     return addCell ((ExcelStyle) null);
   }
-
+  
   /**
    * @return A new cell in the current row of the current sheet
    */
@@ -328,7 +328,7 @@ public final class WorkbookCreationHelper
   public Cell addCell (@Nullable final ExcelStyle aStyle)
   {
     this.m_aLastCell = this.m_aLastRow.createCell (this.m_nLastRowCellIndex++);
-
+    
     // Check for the maximum cell index in this sheet
     if (this.m_nLastRowCellIndex > this.m_nMaxCellIndex)
     {
@@ -340,7 +340,7 @@ public final class WorkbookCreationHelper
     }
     return this.m_aLastCell;
   }
-
+  
   /**
    * @param bValue
    *          The value to be set.
@@ -351,7 +351,7 @@ public final class WorkbookCreationHelper
   {
     return addCell (bValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (final boolean bValue, @Nullable final ExcelStyle aStyle)
   {
@@ -360,7 +360,7 @@ public final class WorkbookCreationHelper
     aCell.setCellValue (bValue);
     return aCell;
   }
-
+  
   /**
    * @param aValue
    *          The value to be set.
@@ -371,7 +371,7 @@ public final class WorkbookCreationHelper
   {
     return addCell (aValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (final Calendar aValue, @Nullable final ExcelStyle aStyle)
   {
@@ -380,7 +380,7 @@ public final class WorkbookCreationHelper
     aCell.setCellValue (aValue);
     return aCell;
   }
-
+  
   /**
    * @param aValue
    *          The value to be set.
@@ -391,7 +391,7 @@ public final class WorkbookCreationHelper
   {
     return addCell (aValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (final Date aValue, @Nullable final ExcelStyle aStyle)
   {
@@ -400,7 +400,7 @@ public final class WorkbookCreationHelper
     aCell.setCellValue (aValue);
     return aCell;
   }
-
+  
   /**
    * @param aValue
    *          The value to be set.
@@ -411,13 +411,13 @@ public final class WorkbookCreationHelper
   {
     return addCell (aValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (@Nonnull final LocalDate aValue, @Nullable final ExcelStyle aStyle)
   {
     return addCell (aValue.toDateTime (CPDT.NULL_LOCAL_TIME), aStyle);
   }
-
+  
   /**
    * @param aValue
    *          The value to be set.
@@ -428,13 +428,13 @@ public final class WorkbookCreationHelper
   {
     return addCell (aValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (@Nonnull final LocalDateTime aValue, @Nullable final ExcelStyle aStyle)
   {
     return addCell (aValue.toDateTime (), aStyle);
   }
-
+  
   /**
    * @param aValue
    *          The value to be set.
@@ -445,13 +445,13 @@ public final class WorkbookCreationHelper
   {
     return addCell (aValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (@Nonnull final DateTime aValue, @Nullable final ExcelStyle aStyle)
   {
     return addCell (aValue.toDate (), aStyle);
   }
-
+  
   /**
    * @param aValue
    *          The value to be set.
@@ -462,7 +462,7 @@ public final class WorkbookCreationHelper
   {
     return addCell (aValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (@Nonnull final BigInteger aValue, @Nullable final ExcelStyle aStyle)
   {
@@ -470,11 +470,11 @@ public final class WorkbookCreationHelper
     {
       return addCell (aValue.longValue (), aStyle);
     }
-
+    
     // Too large - add as string
     return addCell (aValue.toString (), aStyle);
   }
-
+  
   /**
    * @param dValue
    *          The value to be set.
@@ -485,7 +485,7 @@ public final class WorkbookCreationHelper
   {
     return addCell (dValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (final double dValue, @Nullable final ExcelStyle aStyle)
   {
@@ -494,7 +494,7 @@ public final class WorkbookCreationHelper
     aCell.setCellValue (dValue);
     return aCell;
   }
-
+  
   /**
    * @param aValue
    *          The value to be set.
@@ -505,7 +505,7 @@ public final class WorkbookCreationHelper
   {
     return addCell (aValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (@Nonnull final BigDecimal aValue, @Nullable final ExcelStyle aStyle)
   {
@@ -519,7 +519,7 @@ public final class WorkbookCreationHelper
       return addCell (aValue.toString (), aStyle);
     }
   }
-
+  
   /**
    * @param aValue
    *          The value to be set.
@@ -530,7 +530,7 @@ public final class WorkbookCreationHelper
   {
     return addCell (aValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (final RichTextString aValue, @Nullable final ExcelStyle aStyle)
   {
@@ -539,7 +539,7 @@ public final class WorkbookCreationHelper
     setCellValue (aCell, aValue);
     return aCell;
   }
-
+  
   /**
    * @param sValue
    *          The value to be set.
@@ -550,7 +550,7 @@ public final class WorkbookCreationHelper
   {
     return addCell (sValue, null);
   }
-
+  
   @Nonnull
   public Cell addCell (final String sValue, @Nullable final ExcelStyle aStyle)
   {
@@ -559,17 +559,18 @@ public final class WorkbookCreationHelper
     setCellValue (aCell, sValue);
     return aCell;
   }
-
+  
   private void setCellValue (@Nonnull final Cell aCell, final String sValue)
   {
     aCell.setCellValue (sValue == null ? null
                                        : StringHelper.getCutAfterLength (sValue,
                                                                          SpreadsheetVersion.EXCEL97.getMaxTextLength ()));
   }
-
+  
   private void setCellValue (@Nonnull final Cell aCell, final RichTextString aValue)
   {
     if (aValue == null ||
+        aValue.getString () == null ||
         aValue.getString ().length () <= SpreadsheetVersion.EXCEL97.getMaxTextLength ())
     {
       aCell.setCellValue (aValue);
@@ -596,7 +597,7 @@ public final class WorkbookCreationHelper
       }
     }
   }
-
+  
   /**
    * @param sFormula
    *          The formula to be set. May be <code>null</code> to set no formula.
@@ -610,7 +611,7 @@ public final class WorkbookCreationHelper
     aCell.setCellFormula (sFormula);
     return aCell;
   }
-
+  
   /**
    * Set the cell style of the last added cell
    *
@@ -626,7 +627,7 @@ public final class WorkbookCreationHelper
     }
     this.m_aLastCell.setCellStyle (getOrCreateCellStyle (aExcelStyle));
   }
-
+  
   public CellStyle getOrCreateCellStyle (@Nonnull final ExcelStyle aExcelStyle)
   {
     ValueEnforcer.notNull (aExcelStyle, "ExcelStyle"); //$NON-NLS-1$
@@ -640,7 +641,7 @@ public final class WorkbookCreationHelper
     }
     return aCellStyle;
   }
-
+  
   /**
    * @return The number of cells in the current row in the current sheet, 0-based
    */
@@ -649,12 +650,12 @@ public final class WorkbookCreationHelper
   {
     return this.m_nLastRowCellIndex;
   }
-
+  
   public void setLastRowCellIndex (@Nonnegative final int nIndex)
   {
     this.m_nLastRowCellIndex = nIndex;
   }
-
+  
   /**
    * @return The maximum number of cells in a single row in the current sheet, 0-based.
    */
@@ -663,7 +664,7 @@ public final class WorkbookCreationHelper
   {
     return this.m_nMaxCellIndex;
   }
-
+  
   /**
    * Auto size all columns to be matching width in the current sheet
    */
@@ -683,7 +684,7 @@ public final class WorkbookCreationHelper
       }
     }
   }
-
+  
   /**
    * Add an auto filter on the first row on all columns in the current sheet.
    */
@@ -691,7 +692,7 @@ public final class WorkbookCreationHelper
   {
     autoFilterAllColumns (0);
   }
-
+  
   /**
    * @param nRowIndex
    *          The 0-based index of the row, where to set the filter. Add an auto filter on all
@@ -707,7 +708,7 @@ public final class WorkbookCreationHelper
                                                            0,
                                                            this.m_nMaxCellIndex - 1));
   }
-
+  
   /**
    * Write the current workbook to a file
    *
@@ -720,7 +721,7 @@ public final class WorkbookCreationHelper
   {
     return write (FileUtils.getOutputStream (sFilename));
   }
-
+  
   /**
    * Write the current workbook to a file
    *
@@ -733,7 +734,7 @@ public final class WorkbookCreationHelper
   {
     return write (FileUtils.getOutputStream (aFile));
   }
-
+  
   /**
    * Write the current workbook to an output stream.
    *
@@ -746,7 +747,7 @@ public final class WorkbookCreationHelper
   public ESuccess write (@Nonnull @WillClose final OutputStream aOS)
   {
     ValueEnforcer.notNull (aOS, "OutputStream"); //$NON-NLS-1$
-
+    
     try
     {
       if (this.m_nCreatedCellStyles > 0 && LOG.isDebugEnabled ())
@@ -755,7 +756,7 @@ public final class WorkbookCreationHelper
                    this.m_nCreatedCellStyles +
                    " different cell styles"); //$NON-NLS-1$
       }
-
+      
       this.m_aWB.write (aOS);
       return ESuccess.SUCCESS;
     }

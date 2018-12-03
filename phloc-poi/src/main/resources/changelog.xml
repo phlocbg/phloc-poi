@@ -21,7 +21,7 @@
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-poi">
   <release date="2018-12-02" version="3.0.2" />
-  <entry date="2018-11-28" category="tech" action="fix">
+  <entry date="2018-12-02" category="tech" action="fix">
     <change>
       <text locale="en">Fixed NPE on checking the string length of RichText when it was created without an internal value.</text>
     </change>

@@ -35,7 +35,6 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.ss.SpreadsheetVersion;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.RichTextString;
@@ -199,9 +198,6 @@ public final class WorkbookCreationHelper
       aTarget.setHyperlink (aSource.getHyperlink ());
     }
     
-    // Set the cell data type
-    aTarget.setCellType (aSource.getCellType ());
-    
     // Set the cell data value
     switch (aSource.getCellType ())
     {
@@ -356,7 +352,6 @@ public final class WorkbookCreationHelper
   public Cell addCell (final boolean bValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (CellType.BOOLEAN);
     aCell.setCellValue (bValue);
     return aCell;
   }
@@ -376,7 +371,6 @@ public final class WorkbookCreationHelper
   public Cell addCell (final Calendar aValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (CellType.NUMERIC);
     aCell.setCellValue (aValue);
     return aCell;
   }
@@ -396,7 +390,6 @@ public final class WorkbookCreationHelper
   public Cell addCell (final Date aValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (CellType.NUMERIC);
     aCell.setCellValue (aValue);
     return aCell;
   }
@@ -490,7 +483,6 @@ public final class WorkbookCreationHelper
   public Cell addCell (final double dValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (CellType.NUMERIC);
     aCell.setCellValue (dValue);
     return aCell;
   }
@@ -535,7 +527,6 @@ public final class WorkbookCreationHelper
   public Cell addCell (final RichTextString aValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (CellType.STRING);
     setCellValue (aCell, aValue);
     return aCell;
   }
@@ -555,7 +546,6 @@ public final class WorkbookCreationHelper
   public Cell addCell (final String sValue, @Nullable final ExcelStyle aStyle)
   {
     final Cell aCell = addCell (aStyle);
-    aCell.setCellType (CellType.STRING);
     setCellValue (aCell, sValue);
     return aCell;
   }
@@ -607,7 +597,6 @@ public final class WorkbookCreationHelper
   public Cell addCellFormula (@Nullable final String sFormula)
   {
     final Cell aCell = addCell ();
-    aCell.setCellType (CellType.FORMULA);
     aCell.setCellFormula (sFormula);
     return aCell;
   }

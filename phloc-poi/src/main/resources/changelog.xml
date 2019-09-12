@@ -26,6 +26,16 @@
       <text locale="en">Adapted version scheme to correspond with underlying POI version.</text>
     </change>
   </entry>
+  <entry date="2019-09-12" category="tech" action="update">
+    <change>
+      <text locale="en">Removed deprecated calls and calls to APIs no longer available in 4.1.0 (cell type and formula handling).</text>
+    </change>
+  </entry>
+  <entry date="2019-09-12" category="tech" action="update">
+    <change>
+      <text locale="en">Updated to apache poi 4.1.0</text>
+    </change>
+  </entry>
   <release date="2018-12-02" version="3.0.2" />
   <entry date="2018-12-02" category="tech" action="fix">
     <change>

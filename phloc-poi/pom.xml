@@ -27,7 +27,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-poi</artifactId>
-  <version>4.1.5-SNAPSHOT</version>
+  <version>4.1.5</version>
   <packaging>bundle</packaging>
   <name>phloc-poi</name>
   <description>Wrapper around Apache POI</description>
@@ -45,7 +45,7 @@
     <connection>scm:git:https://github.com/phlocbg/phloc-poi</connection>
     <developerConnection>scm:git:https://github.com/phlocbg/phloc-poi</developerConnection>
   <url>http://github.com/phlocbg/phloc-poi</url>
-    <tag>HEAD</tag>
+    <tag>phloc-poi-4.1.5</tag>
 
 </scm>
 

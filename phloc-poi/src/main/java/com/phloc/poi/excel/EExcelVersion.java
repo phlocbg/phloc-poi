@@ -30,6 +30,7 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -51,11 +52,15 @@ public enum EExcelVersion
  {
    @Override
    @Nonnull
-   public HSSFWorkbook createWorkbook ()
+   public HSSFWorkbook createWorkbook (final boolean bUseStreaming)
    {
+     if (bUseStreaming)
+     {
+       LOG.warn ("No streaming support for HSSFWorkbook!"); //$NON-NLS-1$
+     }
      return new HSSFWorkbook ();
    }
-
+   
    @Override
    @Nullable
    public HSSFWorkbook readWorkbook (@Nonnull @WillClose final InputStream aIS)
@@ -67,7 +72,7 @@ public enum EExcelVersion
      }
      catch (final IOException | UnsupportedFileFormatException aEx)
      {
-       s_aLogger.warn ("Exception reading workbook", aEx);
+       LOG.warn ("Exception reading workbook", aEx); //$NON-NLS-1$
        return null;
      }
    }
@@ -78,27 +83,27 @@ public enum EExcelVersion
    {
      return new HSSFRichTextString (sValue);
    }
-
+   
    @Override
    @Nonnull
    public String getFileExtension ()
    {
-     return ".xls";
+     return ".xls"; //$NON-NLS-1$
    }
-
+   
    @Override
    @Nonnull
    public IMimeType getMimeType ()
    {
      return CMimeType.APPLICATION_MS_EXCEL;
    }
-
+   
    @Override
    public boolean hasRowLimitPerSheet ()
    {
      return true;
    }
-
+   
    @Override
    public int getRowLimitPerSheet ()
    {
@@ -110,14 +115,20 @@ public enum EExcelVersion
  {
    @Override
    @Nonnull
-   public XSSFWorkbook createWorkbook ()
+   public Workbook createWorkbook (final boolean bUseStreaming)
    {
+     if (bUseStreaming)
+     {
+       final SXSSFWorkbook aWB = new SXSSFWorkbook (POISetup.getWindowSize ());
+       aWB.setCompressTempFiles (POISetup.isCompressTempFiles ());
+       return aWB;
+     }
      return new XSSFWorkbook ();
    }
-
+   
    @Override
    @Nullable
-   public XSSFWorkbook readWorkbook (@Nonnull @WillClose final InputStream aIS)
+   public Workbook readWorkbook (@Nonnull @WillClose final InputStream aIS)
    {
      try
      {
@@ -126,57 +137,68 @@ public enum EExcelVersion
      }
      catch (final IOException | UnsupportedFileFormatException aEx)
      {
-       s_aLogger.warn ("Exception reading workbook", aEx);
+       LOG.warn ("Exception reading workbook", aEx); //$NON-NLS-1$
        return null;
      }
    }
-
+   
    @Override
    @Nonnull
    public XSSFRichTextString createRichText (final String sValue)
    {
      return new XSSFRichTextString (sValue);
    }
-
+   
    @Override
    @Nonnull
    public String getFileExtension ()
    {
-     return ".xlsx";
+     return ".xlsx"; //$NON-NLS-1$
    }
-
+   
    @Override
    @Nonnull
    public IMimeType getMimeType ()
    {
      return CMimeType.APPLICATION_MS_EXCEL_2007;
    }
-
+   
    @Override
    public boolean hasRowLimitPerSheet ()
    {
      return false;
    }
-
+   
    @Override
    public int getRowLimitPerSheet ()
    {
      return CGlobal.ILLEGAL_UINT;
    }
  };
-
-  private static final Logger s_aLogger = LoggerFactory.getLogger (EExcelVersion.class);
+  
+  private static final Logger LOG = LoggerFactory.getLogger (EExcelVersion.class);
   static
   {
     POISetup.initOnDemand ();
   }
-
+  
   /**
    * @return A newly created workbook of this version
    */
   @Nonnull
-  public abstract Workbook createWorkbook ();
-
+  public Workbook createWorkbook ()
+  {
+    return createWorkbook (false);
+  }
+  
+  /**
+   * @param bUseStreaming
+   *          Whether or not to use the POI internal streaming model (SXSSF)
+   * @return A newly created workbook of this version
+   */
+  @Nonnull
+  public abstract Workbook createWorkbook (boolean bUseStreaming);
+  
   /**
    * Open an existing work book for reading.
    *
@@ -186,27 +208,27 @@ public enum EExcelVersion
    */
   @Nullable
   public abstract Workbook readWorkbook (@Nonnull InputStream aIS);
-
+  
   @Nonnull
   public abstract RichTextString createRichText (String sValue);
-
+  
   /**
    * @return The file extension incl. the leading dot.
    */
   @Nonnull
   public abstract String getFileExtension ();
-
+  
   /**
    * @return The MIME type for this excel version.
    */
   @Nonnull
   public abstract IMimeType getMimeType ();
-
+  
   /**
    * @return <code>true</code> if this Excel version has a row limit inside a sheet
    */
   public abstract boolean hasRowLimitPerSheet ();
-
+  
   /**
    * @return the maximum number of rows per sheet (incl.) or {@link CGlobal#ILLEGAL_UINT} if no
    *         limit exists

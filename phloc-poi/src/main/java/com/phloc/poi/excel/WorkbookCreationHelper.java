@@ -87,7 +87,12 @@ public final class WorkbookCreationHelper
   
   public WorkbookCreationHelper (@Nonnull final EExcelVersion eVersion)
   {
-    this (eVersion.createWorkbook ());
+    this (eVersion, false);
+  }
+  
+  public WorkbookCreationHelper (@Nonnull final EExcelVersion eVersion, final boolean bUseStreaming)
+  {
+    this (eVersion.createWorkbook (bUseStreaming));
   }
   
   public WorkbookCreationHelper (@Nonnull final Workbook aWB)
@@ -670,6 +675,11 @@ public final class WorkbookCreationHelper
       {
         // Happens if a column is too large
         LOG.warn ("Failed to resize column " + nCol + ": column too wide!"); //$NON-NLS-1$ //$NON-NLS-2$
+      }
+      catch (final IllegalStateException ex)
+      {
+        // Happens if a column is not tracked
+        LOG.warn ("Failed to resize column " + nCol, ex); //$NON-NLS-1$
       }
     }
   }

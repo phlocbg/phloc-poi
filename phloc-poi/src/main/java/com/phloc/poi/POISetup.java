@@ -38,6 +38,7 @@ import com.phloc.commons.ValueEnforcer;
 public final class POISetup
 {
   public static final String SYS_PROP_POI_LOGGER = "org.apache.poi.util.POILogger"; //$NON-NLS-1$
+  private static final String CUSTOM_LOGGER_CLASS = "com.phloc.poi.POISLF4JLogger"; //$NON-NLS-1$
   private static final Logger LOG = LoggerFactory.getLogger (POISetup.class);
   public static final int DEFAULT_WINDOW_SIZE = 100;
   private static final AtomicBoolean s_aInited = new AtomicBoolean (false);
@@ -50,7 +51,7 @@ public final class POISetup
   public static void enableCustomLogger (final boolean bEnable)
   {
     if (bEnable)
-      SystemProperties.setPropertyValue (SYS_PROP_POI_LOGGER, POISLF4JLogger.class.getName ());
+      SystemProperties.setPropertyValue (SYS_PROP_POI_LOGGER, CUSTOM_LOGGER_CLASS);
     else
       SystemProperties.removePropertyValue (SYS_PROP_POI_LOGGER);
   }

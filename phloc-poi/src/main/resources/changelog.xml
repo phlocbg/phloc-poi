@@ -20,6 +20,12 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-poi">
+  <release date="2022-08-01" version="4.1.6" />
+  <entry date="2022-06-20" category="feature" action="add">
+    <change>
+      <text locale="en">Add support for POI 5.1.0 and higher (POI-2)</text>
+    </change>
+  </entry>
   <release date="2022-06-20" version="4.1.5" />
   <entry date="2022-06-20" category="feature" action="add">
     <change>
